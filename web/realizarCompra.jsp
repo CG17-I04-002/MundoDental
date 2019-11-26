@@ -49,7 +49,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="main col-md-4">
-                        <h5>Agregar Producto</h5>
+                        <h5>Agregar</h5>
                         <hr>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#modalPac" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Agregar Compra</button><br>
                         <br>
