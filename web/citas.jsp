@@ -94,7 +94,7 @@
                             Fecha:
                         </div>
                         <div class="form-group col-md-2">
-                            <input type="date" name="txtFecha" id="txtFecha" class="form-control" required >
+                            <input type="date" name="txtFecha" id="txtFecha" class="form-control" required value="${citas.fecha}" >
                         </div>
                         <div class="form-group col-md-1">
                             Clinica:
@@ -121,6 +121,25 @@
                             <input type="submit" class="btn btn-primary" value="Agregar" >
                         </div>
                              
+                    </div>
+                </form> 
+            </div>
+            <div class="main">
+                <form action="${pageContext.servletContext.contextPath}/SCitas" method="get">
+                    
+                    <div class="form-row">
+                        
+                        <div class="form-group col-md-1">
+                            <label>Búsqueda:</label>
+                            
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" name="txtBusqueda" id="txtBusqueda" value="${valor}" />
+                            
+                        </div>
+                        <div class="form-group col-md-3">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+                        </div>
                     </div>
                 </form> 
             </div>
