@@ -1,0 +1,37 @@
+.card{
+    
+	background-color: #eef1f7;
+        height: 200px;
+        
+}
+
+.opciones{
+    color: black;
+}
+.opciones:hover{
+    
+    text-decoration: none;
+}
+.iconIndex{
+    font-size: 80px;
+   
+}
+.card:hover{
+    cursor: pointer;
+}
+.n{
+    font-size: 25px;
+    
+}
+.txt{
+    font-size: 30px;
+}
+
+.card:hover  .iconIndex{
+    cursor: pointer;
+    font-size: 85px;
+}
+.main{
+    
+    background-color: #d5dae5;
+}

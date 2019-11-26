@@ -1,0 +1,26 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body{
+    background-color: rgba(0, 0, 0, 0.747);
+    color: blanchedalmond;
+}
+
+.sub-body{
+    margin: 3%;
+    background-color: rgba(13, 235, 43, 0.425);
+    background-color: #8096c5;
+    color: rgb(90, 67, 33);
+    text-align: center;
+}
+
+.imag{
+    height: 40vh;
+    width: auto;
+}
+
+
+

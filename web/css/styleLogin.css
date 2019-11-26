@@ -1,0 +1,165 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.row::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+[class*="col-"]{
+    width: 100%;
+    float: left;
+}
+@font-face {
+    font-family: "jose";
+    src: url("font/montserrat/Montserrat-Bold.ttf");
+}
+@media only screen and (min-width: 600px){
+
+}
+@media only screen and (min-width: 768px){
+    .col-1{width: 8.33%;}
+    .col-2{width: 16.66%;}
+    .col-3{width: 25%;}
+    .col-4{width: 33.33%;}
+    .col-5{width: 41.66%;}
+    .col-6{width: 50%;}
+    .col-7{width: 58.33%;}
+    .col-8{width: 66.66%;}
+    .col-9{width: 75%;}
+    .col-10{width: 83.33%;}
+    .col-11{width: 91.66%;}
+    .col-12{width: 100%;}
+
+    .contenedor{
+        width: 100%;
+        height: 655px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .caja{
+        width: 750px;
+        height: 400px;
+        display: flex;
+        border-radius: 60px 0px 60px 0px;
+    }
+    .isquierda{
+        width: 375px;
+        height: 100%;
+        background-color: #1976d2;
+        border-radius: 60px 0px 0px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border: 5px solid black;
+
+    }
+    .isquierda h2{
+        font-size: 35px;
+        font-weight: bold;
+        padding-bottom: 15px;
+    }
+    .isquierda p{
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+
+    }
+    .isquierda img{
+        margin: 20px;
+        width: 40%;
+    }
+    .derecha{
+        width: 375px;
+        height: 100%;
+        border: 5px solid black;
+        display: flex;
+        border-radius: 0px 0px 60px 0px;
+    }
+    .form1{
+        display: flex;
+    }
+    .form1 input,.form2 input {
+        height: 40px;
+        width: 225px;
+        border:1px solid black;
+        border-radius: 0px 15px 15px 0px;
+        padding-left: 15px;
+        background-color: white;
+        opacity: 0.7;
+        font-size: 18px;
+        color:black;
+    }
+    .form1 input:hover{
+        background-color: white;
+        opacity: 1;
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+    .form2 input:hover{
+        background-color: white;
+        opacity: 1;
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+    .lab{
+        width: 90px;
+        border:1px solid black;
+        border-radius: 15px 0px 0px 15px;
+        padding-left: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        background-color: #0277bd;
+        color:white;
+
+    }
+    .form2{
+        padding-top: 30px;
+        padding-bottom: 15px;
+        display: flex;
+    }
+    .btn button{ 
+        width: 135px;
+        height: 50px;
+        border:none;
+        border-radius: 15px;
+        font-size: 15px;
+        
+        font-weight: 900;
+    }
+    .btn button:hover{ 
+        color: white;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+    .user{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .user img{
+        width: 30%;
+    }
+    .formbox{
+        width: 100%;
+        height: 100%;
+    }
+    form{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+body{
+    background: url(../img/fondo3.jpg);
+    background-size:cover;
+}
