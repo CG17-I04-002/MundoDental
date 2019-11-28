@@ -49,7 +49,7 @@
         <div class="main-content">
             <div class="title d-flex  justify-content-between align-items-center">
                 <h5>
-                    REGISTRO DE COMPRAS
+                    REGISTRO DE VENTAS
                 </h5>
                 <a class="btn btn-primary" href="SCompras?accion=mostrar">Mostrar Ventas</a>
             </div>
@@ -59,23 +59,23 @@
                         <div class="main col-md-4">
                             <h5>Agregar Producto</h5>
                             <hr>
-                            <div class="form-group col-md-1">
-                                <p>Paciente:</p>
-
-                            </div>
-                            <div class="form-group col-md-1">
-                                <input type="text" class="form-control" name="txtId" id="txtIdp" value="${paciente.expediente}" readonly="readonly" required/>
-
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <input type="text" class="form-control" name="txtId" id="txtPac" value="${paciente.nombres} ${paciente.apellidos}" readonly="readonly" required/>
-
-                            </div>
-                            <div class="form-group col-md-1">
-                                <input type="button" value="..." class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
-                            </div>
                             <div class="form-row">
+                                <div class="form-group col-md-2" style="padding: 0px">
+                                    <p>Paciente:</p>
+
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <input type="text" class="form-control" name="txtId" id="txtIdp" value="${paciente.expediente}" readonly="readonly" required/>
+
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" name="txtId" id="txtPac" value="${paciente.nombres} ${paciente.apellidos}" readonly="readonly" required/>
+
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <input type="button" value="..." class="btn btn-primary" data-toggle="modal" data-target="#exampleModalpacientes" data-whatever="@mdo">
+                                </div>
                                 <div class="form-group col-md-6">
                                     Seleccionar Clinica:
                                 </div>
@@ -213,7 +213,7 @@
                             <div class="col-md-12">
                                 <div>
                                     <H5>PRODUCTOS AÑADIDOS</H5>
-                                    <input type="submit" value="Registrar Compra" class="btn btn-primary">
+                                    <input type="submit" value="Registrar Venta" class="btn btn-primary">
                                 </div>
                                 <hr>
                                 <table id="tabla" border=1 class="table table-condensed table-striped">

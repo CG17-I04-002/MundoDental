@@ -40,11 +40,12 @@ public class SVentas extends HttpServlet {
         try {
             List<Locales> locales;
             locales = getLocales();
-            cargarTablaPac(request, response);
+            
             request.setAttribute("locales", locales);
         } catch (SQLException ex) {
             Logger.getLogger(SVentas.class.getName()).log(Level.SEVERE, null, ex);
         }
+        cargarTablaPac(request, response);
         cargarTablap(request, response);
         if (accion == null) {
             request.getRequestDispatcher("realizarVentas.jsp").forward(request, response);
