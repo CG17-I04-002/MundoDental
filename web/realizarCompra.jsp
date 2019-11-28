@@ -32,9 +32,14 @@
         <script src="js/responsive.bootstrap4.min.js" type="text/javascript"></script>
         <!-- Agregar Ventana modal-->
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
         <script src="js/default.js" type="text/javascript"></script>
-        <style>#table01 td{ padding-top: 8px; cursor: pointer}</style>
+        <style>#table01 td{ padding-top: 8px; cursor: pointer}
+            .pv{
+                width: 120px;
+            }
+        </style>
 
         <link href="css/tabla.css" rel="stylesheet" type="text/css"/>
     </head>
@@ -46,6 +51,7 @@
                 <h5>
                     REGISTRO DE COMPRAS
                 </h5>
+                <a class="btn btn-primary" href="SCompras?accion=mostrar">Mostrar compras</a>
             </div>
             <form action="${pageContext.servletContext.contextPath}/SCompras?accion=insertar_modificar" method="POST">
                 <div class="container-fluid">
@@ -53,13 +59,34 @@
                         <div class="main col-md-4">
                             <h5>Agregar Producto</h5>
                             <hr>
-
-
                             <div class="form-row">
-                                
+                                <div class="form-group col-md-6">
+                                    Seleccionar Clinica:
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <select class="browser-default custom-select" id="cblocal" name="cblocal">
+                                        <c:forEach var="local" items="${locales}">
+                                            <option <c:if test="${citas.idLocal==local.idLocal}">selected</c:if> value="${local.idLocal}">${local.local}</option>    
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    Flujo
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select class="browser-default custom-select" id="txtflujo" name="txtflujo">
+                                        <option value="Entrada">Entrada</option>    
+                                        <option value="Salida">Salida</option> 
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <p>Fecha:</p>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <input type="date" class="form-control" name="txtfecha" id="txtfecha"/>
+                                </div>
                                 <div class="form-group col-md-3" style="padding: 0px">
                                     <p>Seleccionar Producto:</p>
-
                                 </div>
                                 <div class="form-group col-md-2">
                                     <input type="text" class="form-control" name="txtId" id="txtId" readonly="readonly"/>
@@ -75,7 +102,7 @@
                                     <p>Costo:</p>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" name="txtCosto" id="txtCosto"/>
+                                    <input type="text" class="form-control" name="txtCosto" id="txtCosto" />
                                 </div>
                                 <div class="form-group col-md-4">
                                     <p>Precio venta:</p>
@@ -91,7 +118,7 @@
                                     <input type="text" class="form-control" name="txtcantidad" id="txtcantidad">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <button id="add" class="btn btn-primary" type="button" > Agregar Producto</button>
+                                    <button id="add" class="btn btn-primary" type="button" onclick="sumarmonto()" > Agregar Producto</button>
                                 </div>
                             </div>
                             <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,19 +187,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tbPac">
-                                <c:if test="${resultado!=null}">
-                                    <c:if test="${resultado==1}">
-                                        <p style="color:darkgreen"><strong>Operación realizada correctamente.</strong></p>
-                                    </c:if>
-                                    <c:if test="${resultado==0}">
-                                        <p style="color:darkred"><strong>La operación no se realizó.</strong></p>
-                                    </c:if>
-
-                                </c:if>     
-
-
-                            </div>
                             <div class="modal fade" id="modalProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -182,8 +196,12 @@
                         </div>
                         <div class="main col-md-8">
                             <div class="col-md-12">
-                                <H5>PRODUCTOS AÑADIDOS</H5>
-                                <table id="tabla" border=1>
+                                <div>
+                                    <H5>PRODUCTOS AÑADIDOS</H5>
+                                    <input type="submit" value="Registrar Compra" class="btn btn-primary">
+                                </div>
+                                <hr>
+                                <table id="tabla" border=1 class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -195,10 +213,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                     </tbody>
                                 </table>
-                                <input type="submit" value="enviar">
+
                             </div>
                             <div>
                                 <br>
@@ -213,12 +231,12 @@
                                             var cantidad = document.getElementById("txtcantidad").value;
                                             var consto = document.getElementById("txtCosto").value;
                                             var pventa = document.getElementById("txtPrecioV").value;
-                                            var nuevaFila = "<tr><td><input type='text' value='" + id + "' name='id' ></td> \
-                                    <td><input type='text'value='" + producto + "' name='producto'></td> \
-                                    <td><input type='text'value='" + consto + "' name='costo'></td> \
-                                    <td><input type='text'value='" + pventa + "' name='precioVenta'></td> \
-                                    <td><input type='text'value='" + cantidad + "' name='cantidad'></td> \
-                                    <td><input type='button' class='del' value='Eliminar Fila'></td> \
+                                            var nuevaFila = "<tr><td><input type='text' value='" + id + "' name='id' class='form-control' readonly='readonly' ></td> \
+                                    <td><input type='text'value='" + producto + "' name='producto' class='form-control' readonly='readonly'></td> \
+                                    <td><input type='text'value='" + consto + "' name='costo'class='form-control' readonly='readonly'></td> \
+                                    <td><input type='text'value='" + pventa + "' name='precioVenta' class='form-control pv' readonly='readonly'></td> \
+                                    <td><input type='text'value='" + cantidad + "' name='cantidad' class='form-control'></td> \
+                                    <td><input type='button' class='del btn btn-danger' value='Eliminar'></td> \
                             </tr>"
 
                                                     ;
@@ -229,6 +247,7 @@
                                         $("#tabla").on("click", ".del", function () {
                                             $(this).parents("tr").remove();
                                         });
+
                                     });
                                 </script>
                             </div>
@@ -236,6 +255,7 @@
                     </div>
                 </div>
             </form>
+                                            
         </div>
     </body>
 </html>
