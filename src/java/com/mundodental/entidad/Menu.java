@@ -6,7 +6,7 @@ import com.mundodental.anotaciones.FieldName;
 import com.mundodental.anotaciones.NotNull;
 import com.mundodental.anotaciones.PrimaryKey;
 
-@Entity(table = "menu")
+@Entity(table = "Menu")
 public class Menu {
     @PrimaryKey
     @AutoIncrement
@@ -68,7 +68,5 @@ public class Menu {
 
     public void setIdpadre(int idpadre) {
         this.idpadre = idpadre;
-    }
-    
-    
+    }   
 }
