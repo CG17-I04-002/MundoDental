@@ -41,7 +41,6 @@ public class SCitas extends HttpServlet {
         cargarTablaPac(request, response);
         cargarTablaCitas(request, response);
         if (accion == null) {
-            
             try {
                 Conexion conn = new ConexionPool();
                 conn.conectar();
