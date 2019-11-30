@@ -162,12 +162,16 @@ public class SCitas extends HttpServlet {
                     citas.setIdLocal(Integer.parseInt(local));
                     if(cita!=null && !cita.equals("")){
                        citas.setIdCita(Integer.parseInt(cita));
-                       citas = Operaciones.actualizar(citas.getIdCita(),new Citas());
+                       citas = Operaciones.actualizar(citas.getIdCita(),citas);
                     }else{
                         citas = Operaciones.insertar(citas);
                     }
                     Operaciones.commit();
-                    
+                    if (citas.getIdCita() != 0) {
+                        request.getSession().setAttribute("resultado", 1);
+                    } else {
+                        request.getSession().setAttribute("resultado", 0);
+                    }
                     
                 } catch (Exception ex) {
                     try {
@@ -214,7 +218,7 @@ public class SCitas extends HttpServlet {
             String[] cabeceras = new String[]{"Expediente", "Nombre", "Apellido"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(pacientes, //array quecontiene los datos
                     "100%", //ancho de la tabla px | % 
-                    Tabla.STYLE.TABLE01, //estilo de la tabla
+                    "tb1", //estilo de la tabla
                     Tabla.ALIGN.LEFT, // alineacion de la tabla
                     cabeceras);
             //array con las cabeceras de la tabla
@@ -255,8 +259,12 @@ public class SCitas extends HttpServlet {
             Operaciones.abrirConexion(conn);
             Operaciones.iniciarTransaccion();
             String sql = "";
+            if (request.getParameter("txtBusqueda") != null) {
+                sql = "SELECT c.idCita, CONCAT(p.nombres, ' ', p.apellidos) Paciente, CONCAT(e.nombres, ' ', e.apellidos) Empleado,c.fecha, c.estado, l.local  FROM Citas c, Pacientes p, Empleados e, Locales l WHERE p.nombres LIKE ? AND p.expediente = c.expediente AND e.idEmpleado = c.idEmpleadoDoctor AND c.idLocal =l.idLocal";
+            }else{
+                sql = "SELECT c.idCita, CONCAT(p.nombres, ' ', p.apellidos) Paciente, CONCAT(e.nombres, ' ', e.apellidos) Empleado,c.fecha, c.estado, l.local  FROM Citas c, Pacientes p, Empleados e, Locales l WHERE  p.expediente = c.expediente AND e.idEmpleado = c.idEmpleadoDoctor AND c.idLocal =l.idLocal";
             
-            sql = "SELECT c.idCita, CONCAT(p.nombres, ' ', p.apellidos) Paciente, CONCAT(e.nombres, ' ', e.apellidos) Empleado,c.fecha, c.estado, l.local  FROM Citas c, Pacientes p, Empleados e, Locales l WHERE p.expediente = c.expediente AND e.idEmpleado = c.idEmpleadoDoctor AND c.idLocal =l.idLocal";
+            }
             String[][] citas = null;
             if (request.getParameter("txtBusqueda") != null) {
                 List<Object> params = new ArrayList<>();

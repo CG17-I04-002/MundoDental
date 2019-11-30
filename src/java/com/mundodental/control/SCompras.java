@@ -44,6 +44,17 @@ public class SCompras extends HttpServlet {
         if (op != null) {
             List<Menu> PermisosAsignados = per.stream().filter(field -> field.getIdpadre() == Integer.parseInt(op)).collect(Collectors.toList());
             request.setAttribute("PermisosAsignados", PermisosAsignados);
+
+        }
+        try {
+            Conexion conn = new ConexionPool();
+            conn.conectar();
+            Operaciones.abrirConexion(conn);
+            List<Locales> locales;
+            locales = getLocales();
+            request.setAttribute("locales", locales);
+        } catch (SQLException ex) {
+            Logger.getLogger(SCompras.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             List<Locales> locales;
@@ -56,8 +67,8 @@ public class SCompras extends HttpServlet {
         cargarTablacompras(request, response);
         if (accion == null) {
             request.getRequestDispatcher("realizarCompra.jsp").forward(request, response);
-        } 
-            else if (accion.equals("mostrar")) {
+        } else if (accion.equals("mostrar")) {
+            cargarTablacompras(request, response);
             request.getRequestDispatcher("mostrarCompras.jsp").forward(request, response);
         }
     }
@@ -148,17 +159,16 @@ public class SCompras extends HttpServlet {
             Operaciones.iniciarTransaccion();
             String sql = "";
 
-            sql = "select idProducto, nombre from productos";
+            sql = "select dt.idProducto,p.nombre, SUM(CASE WHEN o.transaccion = 'compra'  THEN dt.cantidad ELSE -dt.cantidad\n"
+                    + " END) as existencia from Operaciones o, Productos p, Operaciones_Detalles dt\n"
+                    + " where dt.idProducto=p.idProducto and o.idOperacion=dt.idOperacion and o.idLocal=? group by dt.idProducto, p.idProducto,p.nombre";
             String[][] productos = null;
-            if (request.getParameter("txtBusqueda") != null) {
-                List<Object> params = new ArrayList<>();
-                params.add("%" + request.getParameter("txtBusqueda").toString() + "%");
-                productos = Operaciones.consultar(sql, params);
-            } else {
-                productos = Operaciones.consultar(sql, null);
-            }
+            List<Object> params = new ArrayList<>();
+            String user = (String) request.getSession().getAttribute("Usuario");
+            params.add(getLocal(user));
+            productos = Operaciones.consultar(sql, params);
             //declaracion de cabeceras a usar en la tabla HTML
-            String[] cabeceras = new String[]{"ID Producto", "Nombre"};//variable de tipo Tabla para generar la Tabla HTML
+            String[] cabeceras = new String[]{"ID Producto", "Nombre","Existencia"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(productos, //array quecontiene los datos
                     "100%", //ancho de la tabla px | % 
                     Tabla.STYLE.TABLE01, //estilo de la tabla
@@ -217,7 +227,7 @@ public class SCompras extends HttpServlet {
             Operaciones.iniciarTransaccion();
             String sql = "";
 
-            sql = "SELECT o.idProducto,p.nombre,od.costoCompra,od.PrecioVenta,od.cantidad,l.local,o.fecha  FROM Operaciones o, Operaciones_Detalles pd,Locales l,Productos p WHERE o.idOperacion = pd.idOperacion AND o.idProducto=p.idProducto AND o.idLocal =l.idLocal";
+            sql = "select dt.idOperacion,dt.idProducto,p.nombre,o.transaccion ,o.flujo,dt.costoCompra,dt.precioVenta,dt.cantidad,o.fecha,l.local from Operaciones o, Operaciones_Detalles dt,Productos p, Locales l where o.idOperacion=dt.idOperacion and dt.idProducto=p.idProducto and o.idLocal=l.idLocal and o.transaccion='compra';";
             String[][] compras = null;
             if (request.getParameter("txtBusqueda") != null) {
                 List<Object> params = new ArrayList<>();
@@ -227,7 +237,7 @@ public class SCompras extends HttpServlet {
                 compras = Operaciones.consultar(sql, null);
             }
             //declaracion de cabeceras a usar en la tabla HTML
-            String[] cabeceras = new String[]{"idProducto", "", "Producto", "Costo", "PrecioVenta", "Cantidad", "Clinica", "Fecha"};//variable de tipo Tabla para generar la Tabla HTML
+            String[] cabeceras = new String[]{"idOperacion", "idProducto", "Producto", "Transacción", "Flujo", "Costo", "Precio", "Cantidad", "Fecha", "Clinica"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(compras, //array quecontiene los datos
                     "100%", //ancho de la tabla px | % 
                     Tabla.STYLE.TABLE01, //estilo de la tabla
@@ -262,5 +272,19 @@ public class SCompras extends HttpServlet {
                 Logger.getLogger(SCompras.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    private int getLocal(String nombre) throws SQLException {
+        int l = 0;
+        try {
+            String sql = "select idLocal from empleados where usuario=?";
+            List<Object> param = new ArrayList();
+            param.add(nombre);
+            String[][] rs = Operaciones.consultar(sql, param);
+            l = Integer.parseInt(rs[0][0]);
+        } catch (Exception e) {
+            Operaciones.rollback();
+        }
+        return l;
     }
 }

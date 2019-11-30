@@ -33,14 +33,9 @@
         <!-- Agregar Ventana modal-->
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
+        <script src="js/operaciones.js" type="text/javascript"></script>
         <script src="js/default.js" type="text/javascript"></script>
-        <style>#table01 td{ padding-top: 8px; cursor: pointer}
-            .pv{
-                width: 120px;
-            }
-        </style>
-
+        <link href="css/operaciones.css" rel="stylesheet" type="text/css"/>
         <link href="css/tabla.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
@@ -118,7 +113,7 @@
                                     <input type="text" class="form-control" name="txtcantidad" id="txtcantidad">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <button id="add" class="btn btn-primary" type="button" onclick="sumarmonto()" > Agregar Producto</button>
+                                    <button id="add" class="btn btn-primary" type="button" onclick="validarfor()" > Agregar Producto</button>
                                 </div>
                             </div>
                             <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -132,22 +127,6 @@
                                         </div>
                                         <div class="modal-body">
                                             ${tabla}
-                                            <script>
-                                                //funcion javascript que se ejecuta al hacer click en una fila//recibe un elemento de tipo fila como parametro: row
-                                                function _Seleccionarp_(row) {
-                                                    ////recupera el idavion de la fila, en la celda 0
-                                                    var idProducto = row.cells[0].innerHTML;//recupera descripcion del avion de la fila, en la celda 1
-                                                    var nom = row.cells[1].innerHTML;//asigna a las cajas de texto de la ventana padre los valores//obtenidos'
-                                                    //asigna a las cajas de texto de la ventana padre los valores//obtenidos'
-                                                    document.getElementById("txtId").value = idProducto;
-                                                    document.getElementById("txtProd").value = nom;
-                                                    $(document).ready(function () {
-                                                        $("#exampleModal").modal("toggle");
-                                                    }
-                                                    );
-                                                    return false;
-                                                }
-                                            </script>
                                         </div>
 
                                     </div>
@@ -164,22 +143,7 @@
                                         </div>
                                         <div class="modal-body">
                                             ${tablalocal}
-                                            <script>
-                                                //funcion javascript que se ejecuta al hacer click en una fila//recibe un elemento de tipo fila como parametro: row
-                                                function _Seleccionarl_(row) {
-                                                    ////recupera el idavion de la fila, en la celda 0
-                                                    var idLocal = row.cells[0].innerHTML;//recupera descripcion del avion de la fila, en la celda 1
-                                                    var Local = row.cells[1].innerHTML;//asigna a las cajas de texto de la ventana padre los valores//obtenidos'
-                                                    //asigna a las cajas de texto de la ventana padre los valores//obtenidos'
-                                                    document.getElementById("txtIdLocal").value = idLocal;
-                                                    document.getElementById("txtLocal").value = Local;
-                                                    $(document).ready(function () {
-                                                        $("#exampleModalLocal").modal("toggle");
-                                                    }
-                                                    );
-                                                    return false;
-                                                }
-                                            </script>
+
                                         </div>
 
                                     </div>
@@ -194,63 +158,36 @@
                         </div>
                         <div class="main col-md-8">
                             <div class="col-md-12">
-                                <div>
-                                    <H5>PRODUCTOS AÑADIDOS</H5>
+                                <div class="row justify-content-between columna2">
+                                    <H5>PRODUCTOS AÃ‘ADIDOS</H5>
                                     <input type="submit" value="Registrar Compra" class="btn btn-primary">
                                 </div>
                                 <hr>
-                                <table id="tabla" border=1 class="table table-condensed table-striped">
+                                <table id="tabla" border=1>
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>PRODUCTOS</th>
-                                            <th>COSTO</th>
-                                            <th>PRECIO VENTA</th>
-                                            <th>CANTIDAD</th>
-                                            <th>ELIMINAR</th>
+                                            <th class="id">ID</th>
+                                            <th class="prod">PRODUCTOS</th>
+                                            <th class="cost">COSTO</th>
+                                            <th class="pv">PRECIO VENTA</th>
+                                            <th class="cant">CANTIDAD</th>
+                                            <th class="elim">ELIMINAR</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                     </tbody>
                                 </table>
 
                             </div>
                             <div>
                                 <br>
-                                <script>
-                                    $(document).ready(function () {
-                                        /**
-                                         * Funcion para añadir una nueva fila en la tabla
-                                         */
-                                        $("#add").click(function () {
-                                            var id = document.getElementById("txtId").value;
-                                            var producto = document.getElementById("txtProd").value;
-                                            var cantidad = document.getElementById("txtcantidad").value;
-                                            var consto = document.getElementById("txtCosto").value;
-                                            var pventa = document.getElementById("txtPrecioV").value;
-                                            var nuevaFila = "<tr><td><input type='text' value='" + id + "' name='id' class='form-control' readonly='readonly' ></td> \
-                                    <td><input type='text'value='" + producto + "' name='producto' class='form-control' readonly='readonly'></td> \
-                                    <td><input type='text'value='" + consto + "' name='costo'class='form-control' readonly='readonly'></td> \
-                                    <td><input type='text'value='" + pventa + "' name='precioVenta' class='form-control pv' readonly='readonly'></td> \
-                                    <td><input type='text'value='" + cantidad + "' name='cantidad' class='form-control'></td> \
-                                    <td><input type='button' class='del btn btn-danger' value='Eliminar'></td> \
-                            </tr>"
-                                                    ;
-                                            $("#tabla tbody").append(nuevaFila);
-                                        });
-                                        // evento para eliminar la fila
-                                        $("#tabla").on("click", ".del", function () {
-                                            $(this).parents("tr").remove();
-                                        });
-                                    });
-                                </script>
                             </div>
                         </div>
                     </div>
                 </div>
+
+            </div>
             </form>
-                                            
         </div>
     </body>
 </html>

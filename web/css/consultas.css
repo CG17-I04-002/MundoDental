@@ -6,4 +6,12 @@
     
         
 }
+.txt{
+    display: inline;
+    width:50px;
+}
 
+#tablaP {
+     overflow:scroll;
+     height:300px;
+}
