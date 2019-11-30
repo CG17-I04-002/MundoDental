@@ -73,6 +73,7 @@ public class Login extends HttpServlet {
                         sesion.setAttribute("Nombre", emp.getNombres()+ " "+emp.getApellidos());
                         sesion.setAttribute("NombreU", u.getUsuario());
                         Roles roles= getRol(u.getIdRol());
+                        sesion.setAttribute("idRol",u.getIdRol());
                         sesion.setAttribute("Rol",roles.getRol());
                         List<Menu> permisos = getPermisos(u.getIdRol());
                         List<Menu> MenuPrincipal = permisos.stream().filter(field -> field.getIdpadre()==0).collect(Collectors.toList());

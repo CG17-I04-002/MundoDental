@@ -37,11 +37,13 @@ public class Consultas{
     private BigDecimal total;
     @NotNull
     private int idEmpleadoDoctor;
-
+    @NotNull
+    private String estado;
+    
     public Consultas(){
     }
 
-    public Consultas(int idConsulta, Date fecha, Time horaIngreso, Time horaFinalizacionConsulta, String tipoConsulta, BigDecimal costo, int expediente, int idLocal, BigDecimal descuento, BigDecimal total, int idEmpleadoDoctor){
+    public Consultas(int idConsulta, Date fecha, Time horaIngreso, Time horaFinalizacionConsulta, String tipoConsulta, BigDecimal costo, int expediente, int idLocal, BigDecimal descuento, BigDecimal total, int idEmpleadoDoctor, String estado){
         this.idConsulta = idConsulta;
         this.fecha = fecha;
         this.horaIngreso = horaIngreso;
@@ -53,7 +55,7 @@ public class Consultas{
         this.descuento = descuento;
         this.total = total;
         this.idEmpleadoDoctor = idEmpleadoDoctor;
-        
+        this.estado = estado;
     }
 
     public int getIdConsulta(){
@@ -144,4 +146,12 @@ public class Consultas{
     public void setIdEmpleadoDoctor(int idEmpleadoDoctor){
         this.idEmpleadoDoctor = idEmpleadoDoctor;
     }
+    public String getEstado(){
+        return this.estado;
+    }
+
+    public void setEstado(String estado){
+        this.estado = estado;
+    }
+    
 }

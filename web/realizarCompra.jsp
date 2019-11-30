@@ -46,6 +46,8 @@
                 <a class="btn btn-primary" href="Compras?accion=mostrar"><i class="fas fa-eye"></i> Mostrar Compras</a>
                 
             </div>
+            <form>
+                
             <div class="container-fluid">
                 <div class="row">
                     <div class="main col-md-4">
@@ -53,8 +55,7 @@
                         <hr>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#modalPac" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Agregar Compra</button><br>
                         <br>
-                        <form>
-                        </form>
+                        
                         <div class="modal fade" id="modalPac" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -253,6 +254,8 @@
                     </div>
                 </div>
             </div>
+                
+            </form>
         </div>
     </body>
 </html>
