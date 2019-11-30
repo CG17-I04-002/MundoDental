@@ -48,6 +48,74 @@
                 </h5>
                 <a class="btn btn-primary" href="SCompras?accion=mostrar">Mostrar compras</a>
             </div>
+            <form>
+                
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="main col-md-4">
+                        <h5>Agregar</h5>
+                        <hr>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalPac" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Agregar Compra</button><br>
+                        <br>
+                        
+                        <div class="modal fade" id="modalPac" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle" ></i> Nueva Compra</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Nueva Producto</button>
+                                        </p>
+                                        <div class="collapse show multi-collapse" id="multiCollapseExample1">
+                                            <table id="tb2" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Codigo</th>
+                                                    <th>Producto</th>
+                                                    <th>Categoria</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Paracetamol</td>
+                                                    <td>Medicamento</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Paracetamol</td>
+                                                    <td>Medicamento</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Paracetamol</td>
+                                                    <td>Medicamento</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                           
+                                                    <td>Paracetamol</td>
+                                                    <td>Medicamento</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                              
+                                                    <td>Paracetamol</td>
+                                                    <td>Medicamento</td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                   
+                                                    <td>Paracetamol</td>
+                                                    <td>Medicamento</td>
             <form action="${pageContext.servletContext.contextPath}/SCompras?accion=insertar_modificar" method="POST">
                 <div class="container-fluid">
                     <div class="row">
@@ -158,7 +226,7 @@
                         <div class="main col-md-8">
                             <div class="col-md-12">
                                 <div class="row justify-content-between columna2">
-                                    <H5>PRODUCTOS AÑADIDOS</H5>
+                                    <H5>PRODUCTOS AÃ‘ADIDOS</H5>
                                     <input type="submit" value="Registrar Compra" class="btn btn-primary">
                                 </div>
                                 <hr>
@@ -184,8 +252,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </form>
-                                            
         </div>
     </body>
 </html>

@@ -32,10 +32,11 @@
         <!-- Agregar Ventana modal-->
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         
-        <script src="js/default.js" type="text/javascript"></script>
         
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
         <link href="css/tabla.css" rel="stylesheet" type="text/css"/>
+        
+        <script src="js/default.js" type="text/javascript"></script>
         
     </head>
     <body>
@@ -141,8 +142,7 @@
                     <script>            
                         window.onload = function() {
                             document.getElementById("txtBusqueda").focus();};
-                    </script> 
-                    
+                    </script>
                 </div>
             </div>
 

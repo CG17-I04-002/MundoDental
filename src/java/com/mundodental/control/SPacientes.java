@@ -45,7 +45,7 @@ public class SPacientes extends HttpServlet {
             cargarTabla(request, response);
 
             request.getRequestDispatcher("pacientes.jsp").forward(request, response);
-        }else if (accion.equals("modificar")) {
+        } else if (accion.equals("modificar")) {
             cargarTabla(request, response);
             try {
                 Conexion conn = new ConexionPool();
@@ -70,7 +70,7 @@ public class SPacientes extends HttpServlet {
                 }
             }
             request.getRequestDispatcher("pacientes.jsp").forward(request, response);
-        }else if (accion.equals("eliminar")) {
+        } else if (accion.equals("eliminar")) {
 
             try {
                 Conexion conn = new ConexionPool();
@@ -98,7 +98,7 @@ public class SPacientes extends HttpServlet {
                     Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-                response.sendRedirect(request.getContextPath() + "/SPacientes");
+            response.sendRedirect(request.getContextPath() + "/SPacientes");
         }
 
     }
@@ -122,13 +122,12 @@ public class SPacientes extends HttpServlet {
                     Operaciones.abrirConexion(conn);
                     Operaciones.iniciarTransaccion();
                     Pacientes pac = new Pacientes();
-                    
-                    if(!fecha.equals("") && fecha!=null){
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                            Date date = sdf.parse(fecha);
-                            java.sql.Date d = new java.sql.Date(date.getTime());
-                            pac.setFechaNacimiento(d);
-                        }
+                    if (!fecha.equals("") && fecha != null) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = sdf.parse(fecha);
+                        java.sql.Date d = new java.sql.Date(date.getTime());
+                        pac.setFechaNacimiento(d);
+                    }
                     pac.setNombres(nombre);
                     pac.setApellidos(ape);
                     pac.setDireccion(dir);
@@ -136,9 +135,8 @@ public class SPacientes extends HttpServlet {
                     pac.setEmail(email);
                     if (expediente != null && !expediente.equals("")) {
                         pac.setExpediente(Integer.parseInt(expediente));
-                        
                         pac = Operaciones.actualizar(pac.getExpediente(), pac);
-                        
+
                     } else {
                         pac = Operaciones.insertar(pac);
                     }
@@ -148,7 +146,7 @@ public class SPacientes extends HttpServlet {
                         request.getSession().setAttribute("resultado", 0);
                     }
                     Operaciones.commit();
-                    
+
                 } catch (Exception ex) {
                     try {
                         Operaciones.rollback();
@@ -197,7 +195,7 @@ public class SPacientes extends HttpServlet {
             String[] cabeceras = new String[]{"Expediente", "Nombre", "Apellido", "Fecha Nac.", "Teléfono", "Dirección", "Email"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(pacientes, //array quecontiene los datos
                     "100%", //ancho de la tabla px | % 
-                    Tabla.STYLE.TABLE01, //estilo de la tabla
+                    "tb1", //estilo de la tabla
                     Tabla.ALIGN.LEFT, // alineacion de la tabla
                     cabeceras);
             //array con las cabeceras de la tabla
