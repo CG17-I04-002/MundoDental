@@ -17,7 +17,7 @@
         <link href="css/index.css" rel="stylesheet" type="text/css"/> 
     </head>
     <body>
-        
+
         <%@include file="menu.jsp" %>
         <div class="main-content ">
             <div class="title">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="SReportes?accion=totalCitas" class="opciones">
+                    <a  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" class="opciones">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                     </a>
-                    
+
                     <a href="Ventas" class="opciones">
 
                         <div class="card">
@@ -94,7 +94,41 @@
                     </a>
                 </div>
             </div>
+            <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <form>
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle" ></i> Parametros</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group col-md-2">
+                                    <select class="browser-default custom-select" id="cblocal" name="cblocal">
+                                        <c:forEach var="local" items="${locales}">
+                                            <option <c:if test="${citas.idLocal==local.idLocal}">selected</c:if> value="${local.idLocal}">${local.local}</option>    
+                                        </c:forEach>
+                                    </select>
+                                    <div class="form-group col-md-6">
+                                        <label for="txtFecha">Fecha de inicio</label>
+                                        <input type="date" name="txtFeIni" id="txtFeIni" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="txtFecha">Fecha de final</label>
+                                        <input type="date" name="txtFeFin" id="txtFeFin" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
+            </div>
         </div>
     </body>
 </html>
