@@ -132,7 +132,7 @@ public class SPacientes extends HttpServlet {
                     pac.setNombres(nombre);
                     pac.setApellidos(ape);
                     pac.setDireccion(dir);
-                    pac.setTelefono(tel1);
+                    pac.setTelefono(tel);
                     pac.setEmail(email);
                     if (expediente != null && !expediente.equals("")) {
                         pac.setExpediente(Integer.parseInt(expediente));
@@ -141,10 +141,8 @@ public class SPacientes extends HttpServlet {
                     } else {
                         pac = Operaciones.insertar(pac);
                     }
-                    else {
+            
                             request.getSession().setAttribute("resultado", 0);
-                        }
-                    }
                     Operaciones.commit();
                 } catch (Exception ex) {
                     try {
@@ -163,11 +161,8 @@ public class SPacientes extends HttpServlet {
                 }
                 response.sendRedirect(request.getContextPath() + "/SPacientes");
                 break;
-            }
-            case "eliminar": {
-                break;
-            }
         }
+    }
     }
 
     private void cargarTabla(HttpServletRequest request, HttpServletResponse response) {
