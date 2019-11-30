@@ -46,35 +46,16 @@
              <script>
                 $(document).ready(function(){
                     $("#exampleModal").modal("show");
-                    }
-                );
+                }
+                        );
              </script>
         </c:if>
         <div class="main-content">
-            <div class="title d-flex flex-md-row  justify-content-between align-items-center">
+            <div class="title d-flex  justify-content-between align-items-center">
                 <h5>
                     DATOS DE LOS PACIENTES
                 </h5>
                 <button  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Nuevo Paciente</button>
-            </div>
-            <div class="main">
-                <form action="${pageContext.servletContext.contextPath}/SPacientes" method="get">
-                    
-                    <div class="form-row">
-                        
-                        <div class="form-group col-md-1">
-                            <label>Búsqueda:</label>
-                            
-                        </div>
-                        <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="txtBusqueda" id="txtBusqueda" value="${valor}" />
-                            
-                        </div>
-                        <div class="form-group col-md-3">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
-                        </div>
-                    </div>
-                </form> 
             </div>
             <div class="main">
                 <form action="${pageContext.servletContext.contextPath}/SPacientes?accion=insertar_modificar" method="POST">
@@ -83,19 +64,19 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle" ></i> Nuevo Paciente</h5>
-                                    
-                                    <a class="close"  href="SPacientes" onclick="javascript: return window.history.back()"><span aria-hidden="true">&times;</span></a>
-                                    
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
                                 <div class="modal-body">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="txtNom">Nombres</label>
-                                                <input type="text" class="form-control" name="txtNom" id="txtNom" value="${paciente.nombres}" required>
+                                                <input type="text" class="form-control" required="" name="txtNom" id="txtNom" value="${paciente.nombres}">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="txtApe">Apellidos</label>
-                                                <input type="text" class="form-control" name="txtApe" id="txtApe" value="${paciente.apellidos}" required>
+                                                <input type="text" class="form-control" required="" name="txtApe" id="txtApe" value="${paciente.apellidos}" >
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -104,23 +85,30 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="txtTel1">Telefono 1</label>
-                                                <input type="text" class="form-control" name="txtTel" id="txtTel" value="${paciente.telefono}">
+                                                <label for="txtTel1">Expediente</label>
+                                                <input type="text" class="form-control" readonly="true" name="txtIdPaciente" id="txtTel1" value="${paciente.expediente}">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="txtFecha">Fecha de nacimiento</label>
-                                                <input type="date" name="txtFecha" id="txtFecha" class="form-control" value="${paciente.fechaNacimiento}">
+                                                <label for="txtTel2">Telefono</label>
+                                                <input type="number" class="form-control" name="txtTel" id="txtTel2" value="${paciente.telefono}">
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label for="txtFecha">Fecha de nacimiento</label>
+                                            <input type="date" name="txtFecha" id="txtFecha" class="form-control" value="${paciente.fechaNacimiento}"><br>
                                         </div>
                                         <div class="form-group">
                                             <label for="txtEmail">Email</label>
                                             <input type="email" class="form-control" name="txtEmail" id="txtEmail" value="${paciente.email}" >
-                                            <input type="hidden" id="expediente" name="expediente" value="${paciente.expediente}">
                                         </div>
                                         
+
+
                                 </div>
                                 <div class="modal-footer">
-                                    <a class="btn btn-primary"  href="SPacientes" onclick="javascript: return window.history.back()"> <i class="fas fa-arrow-left"></i> Regresar</a>
+                                    <button type="submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
+                                    <a href="SPacientes?" onclick="javascript: return window.history.back()">Regresar</a>
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
                                 </div>
                             </div>
@@ -129,15 +117,12 @@
                 </form>
                 
                 <div class="tbPac">
-                        <c:if test="${resultado!=null}">
-                            <c:if test="${resultado==1}">
-                                <p style="color:darkgreen"><strong>Operación realizada correctamente.</strong></p>
-                            </c:if>
-                            <c:if test="${resultado==0}">
-                                <p style="color:darkred"><strong>La operación no se realizó.</strong></p>
-                            </c:if>
-
-                        </c:if>        
+                        <div class="busqueda" style="width: 50%; text-align: right">
+                            <form action="${pageContext.servletContext.contextPath}/SPacientes" method="get">
+                                <input type="text" name="txtBusqueda" id="txtBusqueda" value="${valor}" />
+                                <input type="submit" value="Buscar"/>
+                            </form>
+                        </div>                    
                         ${tabla}
                     <script>            
                         window.onload = function() {

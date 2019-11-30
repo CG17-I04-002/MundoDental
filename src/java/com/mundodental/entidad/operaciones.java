@@ -1,4 +1,3 @@
-
 package com.mundodental.entidad;
 
 import com.mundodental.anotaciones.AutoIncrement;
@@ -73,4 +72,3 @@ public class operaciones {
     public void setMonto(BigDecimal monto){
         this.monto=monto;
     }
-}

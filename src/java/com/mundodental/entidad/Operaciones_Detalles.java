@@ -1,4 +1,3 @@
-
 package com.mundodental.entidad;
 
 import com.mundodental.anotaciones.AutoIncrement;

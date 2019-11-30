@@ -2,11 +2,13 @@ package com.mundodental.control;
 
 import com.mundodental.conexion.Conexion;
 import com.mundodental.conexion.ConexionPool;
+import com.mundodental.entidad.Citas;
 import com.mundodental.entidad.Empleados;
 import com.mundodental.entidad.Locales;
 import com.mundodental.entidad.Menu;
 import com.mundodental.entidad.Productos;
 import com.mundodental.entidad.Operaciones_Detalles;
+import com.mundodental.entidad.Pacientes;
 import com.mundodental.entidad.operaciones;
 import com.mundodental.operaciones.Operaciones;
 import com.mundodental.utilerias.Tabla;
@@ -54,7 +56,13 @@ public class SCompras extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(SCompras.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        try {
+            List<Locales> locales;
+            locales = getLocales();
+            request.setAttribute("locales", locales);
+        } catch (SQLException ex) {
+            Logger.getLogger(SCompras.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cargarTabla(request, response);
         cargarTablacompras(request, response);
         if (accion == null) {

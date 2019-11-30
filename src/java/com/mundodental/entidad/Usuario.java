@@ -10,7 +10,6 @@ import com.mundodental.anotaciones.PrimaryKey;
 @Entity(table = "Usuario")
 public class Usuario {
     @PrimaryKey
-    @AutoIncrement
     @FieldName(name = "usuario")
     private String usuario;
     @NotNull
