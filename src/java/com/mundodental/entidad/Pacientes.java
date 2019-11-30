@@ -28,8 +28,7 @@ public class Pacientes {
 
     }
 
-    public Pacientes(int expediente,String nombres, String apellidos, Date fechaNacimiento, String telefono, String direccion, String email) {
-        this.expediente = expediente;
+    public Pacientes(String nombres, String apellidos, Date fechaNacimiento, String telefono, String direccion, String email) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.fechaNacimiento = fechaNacimiento;

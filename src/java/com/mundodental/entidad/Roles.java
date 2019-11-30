@@ -17,8 +17,8 @@ public class Roles {
     @NotNull
     private String rol;
 
-    public Roles(int idRol, String rol) {
-        this.idRol = idRol;
+    public Roles( String rol) {
+        ///this.idRol = idRol;
         this.rol = rol;
     }
 

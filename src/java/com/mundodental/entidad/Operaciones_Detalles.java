@@ -1,4 +1,3 @@
-
 package com.mundodental.entidad;
 
 import com.mundodental.anotaciones.AutoIncrement;
@@ -6,25 +5,25 @@ import com.mundodental.anotaciones.Entity;
 import com.mundodental.anotaciones.FieldName;
 import com.mundodental.anotaciones.NotNull;
 import com.mundodental.anotaciones.PrimaryKey;
+import java.math.BigDecimal;
 
 @Entity(table = "Operaciones_Detalles")
 public class Operaciones_Detalles {
     @PrimaryKey
-    @AutoIncrement
-    @FieldName(name = "idOperaciones")
+    @FieldName(name = "idOperacion")
     private int idOperacion;
     @NotNull
     private int idProducto;
     @NotNull
-    private double costoCompra;
+    private BigDecimal costoCompra;
     @NotNull
     private int cantidad;
     @NotNull
-    private double precioVenta;
+    private BigDecimal precioVenta;
     
     public Operaciones_Detalles(){
     }
-    public Operaciones_Detalles(int idOperacion,int idProducto,double costoCompra,int cantidad,double precioVenta){
+    public Operaciones_Detalles(int idOperacion,int idProducto,BigDecimal costoCompra,int cantidad,BigDecimal precioVenta){
         this.idOperacion=idOperacion;
         this.idProducto=idProducto;
         this.costoCompra=costoCompra;
@@ -43,10 +42,10 @@ public class Operaciones_Detalles {
     public void setIdProducto(int idProducto){
         this.idProducto=idProducto;
     }
-    public double getCostoCompra(){
+    public BigDecimal getCostoCompra(){
         return costoCompra;
     }
-    public void setCostoCompra(double costoCompra){
+    public void setCostoCompra(BigDecimal costoCompra){
         this.costoCompra=costoCompra;
     }
     public int getCantidad(){
@@ -55,10 +54,10 @@ public class Operaciones_Detalles {
     public void setCantidad(int cantidad){
         this.cantidad=cantidad;
     }
-    public double getPrecioVenta(){
+    public BigDecimal getPrecioVenta(){
         return precioVenta;
     }
-    public void setPrecioVenta(double precioVenta){
+    public void setPrecioVenta(BigDecimal precioVenta){
         this.precioVenta=precioVenta;
     }
     
