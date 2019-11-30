@@ -38,6 +38,9 @@ public class SVentas extends HttpServlet {
             request.setAttribute("PermisosAsignados", PermisosAsignados);
         }
         try {
+            Conexion conn = new ConexionPool();
+            conn.conectar();
+            Operaciones.abrirConexion(conn);
             List<Locales> locales;
             locales = getLocales();
             

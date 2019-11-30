@@ -114,14 +114,8 @@
                                 <div class="form-group col-md-2">
                                     <input type="button" value="..." class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" >
                                 </div>
-                                <div class="form-group col-md-2" style="padding: 0px">
-                                    <p>Costo:</p>
-                                </div>
                                 <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" name="txtCosto" id="txtCosto" />
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <p>Precio venta:</p>
+                                    <p>Precio:</p>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <input type="text" class="form-control" name="txtPrecioV" id="txtPrecioV"/>

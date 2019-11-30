@@ -21,7 +21,7 @@ public class ConexionPool implements Conexion {
         try {
             Context initCtx;
             initCtx = new InitialContext();
-            DataSource ds = (DataSource) initCtx.lookup("jdbc/MundoDental");
+            DataSource ds = (DataSource) initCtx.lookup("jdbc/mundoDental");
             conn = ds.getConnection();
         } catch (NamingException | SQLException e) {
             System.out.println("db: " + e.getMessage());
