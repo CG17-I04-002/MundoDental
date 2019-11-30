@@ -5,6 +5,8 @@ import com.mundodental.conexion.ConexionPool;
 import com.mundodental.entidad.Citas;
 import com.mundodental.entidad.Empleados;
 import com.mundodental.entidad.Locales;
+import com.mundodental.entidad.Membresias;
+import com.mundodental.entidad.Membresias_Beneficiarios;
 import com.mundodental.entidad.Menu;
 import com.mundodental.entidad.Productos;
 import com.mundodental.entidad.Operaciones_Detalles;
@@ -69,17 +71,16 @@ public class SMembresias extends HttpServlet {
 
         switch (accion) {
             case "insertar_modificar": {
-                String idLocal = request.getParameter("cblocal");
-                String fecha = request.getParameter("txtfecha");
-                String flujo = request.getParameter("txtflujo");
-                String monto = request.getParameter("txtmonto");
-                double jose = 0;
+                String expediente = request.getParameter("txtexpediente");
+                String nombre = request.getParameter("txtNombre");
+                String fechaRegistro = request.getParameter("txtfechaRegistro");
+                String fechaVencimiento = request.getParameter("txtfechaVencimiento");
+                String monto = request.getParameter("txtMonto");
 
-                String[] idProducto = request.getParameterValues("id");
+                String[] idMembresia = request.getParameterValues("id");
                 // String[] Producto = request.getParameterValues("producto");
-                String[] costo = request.getParameterValues("costo");
-                String[] pventa = request.getParameterValues("precioVenta");
-                String[] cantidad = request.getParameterValues("cantidad");
+               
+                
 
                 try {
                     Conexion conn = new ConexionPool();
@@ -88,29 +89,32 @@ public class SMembresias extends HttpServlet {
                     Operaciones.iniciarTransaccion();
 
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    Date date = sdf.parse(fecha);
-                    Operaciones_Detalles o = new Operaciones_Detalles();
+                    Date date = sdf.parse(fechaRegistro);
 
-                    for (int i = 0; i < idProducto.length; i++) {
-                        jose += Double.parseDouble(costo[i]);
-                    }
+                    
                     java.sql.Date d = new java.sql.Date(date.getTime());
-                    operaciones op = new operaciones();
-                    op.setFecha(d);
-                    op.setIdLocal(Integer.parseInt(idLocal));
-                    op.setFlujo(flujo);
-                    op.setTransaccion("compra");
-                    op.setMonto(BigDecimal.valueOf(jose));
+                    Membresias m = new Membresias();
+                    m.setFechaRegistro(d);
+                    
+                    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date2 = sdf2.parse(fechaVencimiento);
 
-                    op = Operaciones.insertar(op);
-                    for (int i = 0; i < idProducto.length; i++) {
-                        Operaciones_Detalles opd = new Operaciones_Detalles();
-                        opd.setIdOperacion(op.getIdOperacion());
-                        opd.setIdProducto(Integer.parseInt(idProducto[i]));
-                        opd.setCostoCompra(BigDecimal.valueOf(Double.parseDouble(costo[i])));
-                        opd.setPrecioVenta(BigDecimal.valueOf(Double.parseDouble(pventa[i])));
-                        opd.setCantidad(Integer.parseInt(cantidad[i]));
-                        opd = Operaciones.insertar(opd);
+                    
+                    java.sql.Date d2 = new java.sql.Date(date2.getTime());
+                    m.setFechaVencimiento(d2);
+                    
+                    
+                    m.setExpediente(Integer.parseInt(expediente));
+                    
+                    m.setMonto(BigDecimal.valueOf(Double.parseDouble(monto)));
+                    
+                    m = Operaciones.insertar(m);
+                    for (int i = 0; i < idMembresia.length; i++) {
+                        Membresias_Beneficiarios mb = new Membresias_Beneficiarios();
+                        mb.setIdMembresia(m.getIdMembresia());
+                        mb.setExpediente(Integer.parseInt(idMembresia[i]));
+                        
+                        mb = Operaciones.insertar(mb);
 
                     }
 
@@ -120,7 +124,7 @@ public class SMembresias extends HttpServlet {
                     try {
                         Operaciones.rollback();
                     } catch (SQLException ex1) {
-                        Logger.getLogger(SCompras.class.getName()).log(Level.SEVERE, null, ex1);
+                        Logger.getLogger(SMembresias.class.getName()).log(Level.SEVERE, null, ex1);
                     }
                     request.getSession().setAttribute("resultado", 0);
                     ex.printStackTrace();
@@ -128,10 +132,10 @@ public class SMembresias extends HttpServlet {
                     try {
                         Operaciones.cerrarConexion();
                     } catch (SQLException ex) {
-                        Logger.getLogger(SCompras.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(SMembresias.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                response.sendRedirect(request.getContextPath() + "/SCompras");
+                response.sendRedirect(request.getContextPath() + "/SMembresias");
                 break;
             }
             case "eliminar": {

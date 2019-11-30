@@ -159,7 +159,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle" ></i> Clinicas</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle" ></i> Pacientes</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -177,7 +177,7 @@
                                         document.getElementById("txtNombreBeneficiario").value = nombre;
                                         
                                         var nuevaFila = "<tr><td><input type='text' value='" + expediente + "' name='id' class='form-control' readonly='readonly' ></td> \
-                                    <td><input type='text'value='" + nombre + "' name='producto' class='form-control' readonly='readonly'></td> \
+                                    <td><input type='text'value='" + nombre + "' name='nombreMembresia' class='form-control' readonly='readonly'></td> \
                                      \
                                     <td><input type='button' class='del btn btn-danger' value='Eliminar'></td> \
                             </tr>"
@@ -204,8 +204,8 @@
                         <div class="main col-md-8">
                             <div class="col-md-12">
                                 <div>
-                                    <H5>PRODUCTOS AÑADIDOS</H5>
-                                    <input type="submit" value="Registrar Compra" class="btn btn-primary">
+                                    <H5>BENEFICIARIOS AÑADIDOS</H5>
+                                    <input type="submit" value="Registrar Membresia" class="btn btn-primary">
                                 </div>
                                 <hr>
                                 <table id="tabla" border=1 class="table table-condensed table-striped">
