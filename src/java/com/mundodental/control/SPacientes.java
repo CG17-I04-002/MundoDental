@@ -70,7 +70,7 @@ public class SPacientes extends HttpServlet {
                 }
             }
             request.getRequestDispatcher("pacientes.jsp").forward(request, response);
-        }else if (accion.equals("eliminar")) {
+        } else if (accion.equals("eliminar")) {
 
             try {
                 Conexion conn = new ConexionPool();
@@ -98,7 +98,7 @@ public class SPacientes extends HttpServlet {
                     Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-                response.sendRedirect(request.getContextPath() + "/SPacientes");
+            response.sendRedirect(request.getContextPath() + "/SPacientes");
         }
 
     }
@@ -122,40 +122,24 @@ public class SPacientes extends HttpServlet {
                     conn.conectar();
                     Operaciones.abrirConexion(conn);
                     Operaciones.iniciarTransaccion();
-                    
+                    Pacientes pac = new Pacientes();
+                    if (!fecha.equals("") && fecha != null) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = sdf.parse(fecha);
+                        java.sql.Date d = new java.sql.Date(date.getTime());
+                        pac.setFechaNacimiento(d);
+                    }
+                    pac.setNombres(nombre);
+                    pac.setApellidos(ape);
+                    pac.setDireccion(dir);
+                    pac.setTelefono(tel1);
+                    pac.setEmail(email);
                     if (expediente != null && !expediente.equals("")) {
-                        Pacientes p = new Pacientes();
-                    p.setExpediente(Integer.parseInt(expediente));
-                    p.setNombres(nombre);
-                    p.setApellidos(ape);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    Date date = sdf.parse(fecha);
-                    java.sql.Date d = new java.sql.Date(date.getTime());
-                    p.setFechaNacimiento(d);
-                    p.setDireccion(dir);
-                    p.setTelefono(tel);
-                    p.setEmail(email);
-                        p = Operaciones.actualizar(p.getExpediente(), p);
-                        if (p.getExpediente()!= 0) {
-                            request.getSession().setAttribute("resultado", 1);
-                        } else {
-                            request.getSession().setAttribute("resultado", 0);
-                        }
-                    }else{
+                        pac.setExpediente(Integer.parseInt(expediente));
+                        pac = Operaciones.actualizar(pac.getExpediente(), pac);
 
-                    Pacientes p = new Pacientes();
-                    p.setNombres(nombre);
-                    p.setApellidos(ape);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    Date date = sdf.parse(fecha);
-                    java.sql.Date d = new java.sql.Date(date.getTime());
-                    p.setFechaNacimiento(d);
-                    p.setDireccion(dir);
-                    p.setTelefono(tel);
-                    p.setEmail(email);
-                    p = Operaciones.insertar(p);
-                    if(p.getExpediente()!=0){
-                         request.getSession().setAttribute("resultado", 1);
+                    } else {
+                        pac = Operaciones.insertar(pac);
                     }
                     else {
                             request.getSession().setAttribute("resultado", 0);
@@ -209,8 +193,8 @@ public class SPacientes extends HttpServlet {
             //declaracion de cabeceras a usar en la tabla HTML
             String[] cabeceras = new String[]{"ID Paciente", "Nombre", "Apellido", "Fech. Nac.", "telefono", "direccion", "email"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(pacientes, //array quecontiene los datos
-                    "50%", //ancho de la tabla px | % 
-                    Tabla.STYLE.TABLE01, //estilo de la tabla
+                    "100%", //ancho de la tabla px | % 
+                    "tb1", //estilo de la tabla
                     Tabla.ALIGN.LEFT, // alineacion de la tabla
                     cabeceras);
             //array con las cabeceras de la tabla

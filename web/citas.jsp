@@ -12,7 +12,6 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
 
         <script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
-
         <script src="js/68ab40f8cf.js" type="text/javascript"></script>
         <link href="css/pacientes.css" rel="stylesheet" type="text/css"/>
         <script src="js/popper.min.js" type="text/javascript"></script>
@@ -36,6 +35,8 @@
         <style>#table01 td{ padding-top: 8px; cursor: pointer}</style>
         
         <link href="css/tabla.css" rel="stylesheet" type="text/css"/>
+        
+        <link href="css/consultas.css" rel="stylesheet" type="text/css"/>
         
     </head>
     <body>
@@ -154,24 +155,27 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ${tabla}
-                                <script>
-                                    //funcion javascript que se ejecuta al hacer click en una fila//recibe un elemento de tipo fila como parametro: row
-                                    function _Seleccionar_(row) {
-                                    ////recupera el idavion de la fila, en la celda 0
-                                        var expe = row.cells[0].innerHTML;//recupera descripcion del avion de la fila, en la celda 1
-                                        var nom = row.cells[1].innerHTML;//asigna a las cajas de texto de la ventana padre los valores//obtenidos'
-                                        var ape = row.cells[2].innerHTML;//asigna a las cajas de texto de la ventana padre los valores//obtenidos'
-                                        document.getElementById("txtId").value = expe;
-                                        document.getElementById("txtPac").value = nom+" "+ape;
-                                        $(document).ready(function(){
-                                            $("#exampleModal").modal("toggle");
-                                            }
-                                        );
-                                        return false;
-                                    }
-                                </script>
+                                <div id="tablaP">
                                     
+                                ${tabla}
+                                    <script>
+                                        //funcion javascript que se ejecuta al hacer click en una fila//recibe un elemento de tipo fila como parametro: row
+                                        function _Seleccionar_(row) {
+                                        ////recupera el idavion de la fila, en la celda 0
+                                            var expe = row.cells[0].innerHTML;//recupera descripcion del avion de la fila, en la celda 1
+                                            var nom = row.cells[1].innerHTML;//asigna a las cajas de texto de la ventana padre los valores//obtenidos'
+                                            var ape = row.cells[2].innerHTML;//asigna a las cajas de texto de la ventana padre los valores//obtenidos'
+                                            document.getElementById("txtId").value = expe;
+                                            document.getElementById("txtPac").value = nom+" "+ape;
+                                            $(document).ready(function(){
+                                                $("#exampleModal").modal("toggle");
+                                                }
+                                            );
+                                            return false;
+                                        }
+                                    </script>
+
+                                </div>
 
                             </div>
                             <div class="modal-footer">
