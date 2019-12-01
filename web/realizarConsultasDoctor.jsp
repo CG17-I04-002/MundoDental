@@ -43,7 +43,17 @@
         <link href="css/tabla.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        
         <%@include file="menu.jsp" %>
+        <c:if test="${existencia==1}">
+             <script>
+                $(document).ready(function(){
+                    alert("No tiene consultas disponibles");
+                    history.back();
+                    }         
+                );
+             </script>
+        </c:if>
         <div class="main-content">
             <div class="title d-flex  justify-content-between align-items-center">
                 <h5>
@@ -120,8 +130,8 @@
 
                                 </tbody>
                             </table>
-                            <input type="text" class="form-control" name="txtTotal" id="txtTotal" readonly="readonly" required value="0"/>
-                            <br>
+                            <strong>Total: $</strong><input type="text" class="form-control" name="txtTotal" id="txtTotal" readonly="readonly" size="25" required value="0"/>
+                            <br><br>
                             <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle" ></i> Completar</button><br>
 
                         </div>

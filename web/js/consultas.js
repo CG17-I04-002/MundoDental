@@ -1,3 +1,4 @@
+
 function enviar(id){
     
      document.location.href ="SConsultas?accion=finalizar&id="+id;
@@ -7,7 +8,7 @@ function enviar(id){
 function _Seleccionar_(row) {
     ////recupera el idavion de la fila, en la celda 0
     var expe = row.cells[0].innerHTML;//recupera descripcion del avion de la fila, en la celda 1
-    location.href ="${pageContext.servletContext.contextPath}/SConsultas?accion=seleccionar&id=" + expe;
+    location.href ="SConsultas?accion=seleccionar&id=" + expe;
 
 }
 function restar(id) {
@@ -48,5 +49,5 @@ $(document).ready(function () {
     // evento para eliminar la fila
     $("#tabla").on("click", ".del", function () {
         $(this).parents("tr").remove();
-    });
+    });  
 });

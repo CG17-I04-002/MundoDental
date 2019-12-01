@@ -132,13 +132,30 @@
                                
                                     
                                 <div class="card">
-                                    <div class="card-header" id="headingOne">
+                                    <div class="card-header ejemplo" id="headingOne">
                                         <h5 class="mb-0">
-                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${con.idConsulta}" aria-expanded="true" aria-controls="collapse${con.idConsulta}">
-                                                <c:forEach  var="emp" items="${empleados}">
-                                                    <c:if test="${con.idEmpleadoDoctor==emp.idEmpleado}">Consulta Dr. ${emp.nombres} ${emp.apellidos}</c:if> 
-                                                </c:forEach>
-                                            </button>
+                                            <div class=" d-flex  justify-content-between align-items-center">
+                                                
+                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${con.idConsulta}" aria-expanded="true" aria-controls="collapse${con.idConsulta}">
+                                                    <c:forEach  var="pac" items="${pacientes}">
+                                                        <c:if test="${con.expediente==pac.expediente}">${pac.nombres} ${pac.apellidos}</c:if> 
+                                                    </c:forEach>
+                                                </button>
+                                                    
+                                                <c:choose>
+                                                    <c:when test = "${con.estado == 'Proceso'}">
+                                                        <i class="fas fa-user-cog Proceso"></i>
+                                                    </c:when>
+                                                    <c:when test = "${con.estado == 'Completada'}">
+                                                        <i class="fas fa-user-check Completada"></i>
+                                                    </c:when>
+                                                    <c:when test = "${con.estado == 'Espera'}">
+                                                        <i class="fas fa-user-clock Espera"></i>
+                                                    </c:when>
+                                                </c:choose>
+                                            </div>
+                                                    
+                                                
                                         </h5>
                                     </div>
 
@@ -147,20 +164,29 @@
                                             
                                             <div class="container-fluid">
                                                 <div class="row">
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
                                                         
                                                         <label>ID Consulta: </label>
                                                         <input type="text"  class="form-control txt" readonly="readonly" size="5" value="${con.idConsulta}">
                                                         
                                                     </div>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-5">
                                                         
-                                                        <label>Paciente: </label>
-                                                            <c:forEach  var="pac" items="${pacientes}">
-                                                                <c:if test="${con.expediente==pac.expediente}"><strong>${pac.nombres} ${pac.apellidos} </strong></c:if> 
+                                                        <label>Doctor: </label>
+                                                            
+                                                                
+                                                            <c:forEach  var="emp" items="${empleados}">
+                                                                <c:if test="${con.idEmpleadoDoctor==emp.idEmpleado}"><strong>${emp.nombres} ${emp.apellidos}</strong></c:if> 
                                                             </c:forEach>
                                                     </div>
+                                                    <div class="col-md-4">
+                                                        
+                                                        <label>Estado Consulta: </label>
+                                                        <strong>${con.estado}</strong>
+                                                    </div>
+                                                    
                                                 </div>
+                                                                
                                                         
                                                 <div class="row">
                                                     <div class="col-md-4">
@@ -183,7 +209,7 @@
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         
-                                                        <a href="SConsultas">Iniciar</a>
+                                                        <a href="SConsultas?accion=iniciar&id=${con.idConsulta}">Iniciar</a>
                                                         
                                                     </div>
                                                     <div class="col-md-4">
@@ -196,7 +222,7 @@
                                                     <div class="col-md-8">
                                                         
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4  d-flex  justify-content-end">
                                                         <input type="button" class="boton" value="Finalizar" onclick="enviar('${con.idConsulta}');">
                                                     </div>
                                                 </div>
