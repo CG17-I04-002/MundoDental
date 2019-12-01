@@ -57,11 +57,17 @@ public class SConsultas extends HttpServlet {
                     String user = (String) request.getSession().getAttribute("Usuario");
                     Consultas c = new Consultas();
                     c = getConsulta(user);
-                    Pacientes p = new Pacientes();
-                    p = Operaciones.get(c.getExpediente(), new Pacientes());
+                    if(c.getIdConsulta()!=0){
+                        Pacientes p = new Pacientes();
+                        p = Operaciones.get(c.getExpediente(), new Pacientes());
+
+                        request.setAttribute("consulta", c);
+                        request.setAttribute("paciente", p);
+                    }else{
+                        
+                        request.setAttribute("existencia","1");
+                    }
                     
-                    request.setAttribute("consulta", c);
-                    request.setAttribute("paciente", p);
                     request.getRequestDispatcher("realizarConsultasDoctor.jsp").forward(request, response);
                 } catch (Exception ex) {
                     try {
@@ -159,6 +165,32 @@ public class SConsultas extends HttpServlet {
                 Operaciones.iniciarTransaccion();
                 Consultas c = Operaciones.get(Integer.parseInt(request.getParameter("id")), new Consultas());
                 c.setEstado("Finalizada");
+                c = Operaciones.actualizar(c.getIdConsulta(), c);
+                
+                Operaciones.commit();
+            }catch(Exception ex) {
+                try {
+                    Operaciones.rollback();
+                } catch (SQLException ex1) {
+                    Logger.getLogger(SConsultas.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }finally {
+                try {
+                    Operaciones.cerrarConexion();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SConsultas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            response.sendRedirect(request.getContextPath() + "/SConsultas");
+        }else if (accion.equals("iniciar")) {
+            cargarTablaPac(request, response);
+            try {
+                Conexion conn = new ConexionPool();
+                conn.conectar();
+                Operaciones.abrirConexion(conn);
+                Operaciones.iniciarTransaccion();
+                Consultas c = Operaciones.get(Integer.parseInt(request.getParameter("id")), new Consultas());
+                c.setEstado("Proceso");
                 c = Operaciones.actualizar(c.getIdConsulta(), c);
                 
                 Operaciones.commit();
@@ -446,6 +478,7 @@ public class SConsultas extends HttpServlet {
                 c.setCosto(BigDecimal.valueOf(Double.parseDouble(rs[5][i])));
                 c.setDescuento(BigDecimal.valueOf(Double.parseDouble(rs[8][i])));
                 c.setTotal(BigDecimal.valueOf(Double.parseDouble(rs[9][i])));
+                c.setEstado(rs[11][i]);
                 consultas.add(c);
                 
             }
