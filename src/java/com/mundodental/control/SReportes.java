@@ -24,22 +24,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 
 public class SReportes extends HttpServlet {
-    /*
-     //to get images to display in report, pass their relative path as input stream and add to HashMap
-        //there must be one stream and one HashMap per image
-        InputStream imgInputStream = this.getClass().getResourceAsStream("/reports/omacLogo.jpg");
-        InputStream imgInputStream2 = this.getClass().getResourceAsStream("/reports/omacLogo.jpg");
-        parameters.put("omacLogo", imgInputStream);
-        parameters2.put("omacLogo", imgInputStream2);
-
-        InputStream jasper1 = this.getClass().getResourceAsStream("/reports/OmacYTDReportFinalpg1.jasper");
-        InputStream jasper2 = this.getClass().getResourceAsStream("/reports/OmacYTDReportFinalpg2.jasper");
-
-        JasperPrint jp1 = JasperFillManager.fillReport(jasper1, parameters,new JRBeanCollectionDataSource(ie.orderofmalta.BeanFactory.getCalcs()));
-        JasperPrint jp2 = JasperFillManager.fillReport(jasper2, parameters2, new JRBeanCollectionDataSource(ie.orderofmalta.BeanFactory.getCalcs()));
-    
-    */
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,12 +41,13 @@ public class SReportes extends HttpServlet {
             //configuramos los parametros en una varible de tipo Map
             //que como un array
             Map parameters = new HashMap();
+            
             //parameters.put("origen", "1");
             parameters.put("Logo", context.getRealPath("/")+"img/Logo.png");
             parameters.put("Grafica", context.getRealPath("/")+"reportes/totalCitas_grafica.jasper");
             parameters.put("Local", "1");
             parameters.put("FechaIni", "2019-11-14");
-            parameters.put("FechaFin", "2019-11-24");
+            parameters.put("FechaFin", "2019-12-14");
             //String url = request.getRequestURI().toString();
             
             //para agregar mas parametro solo llame el metodo put() varias veces

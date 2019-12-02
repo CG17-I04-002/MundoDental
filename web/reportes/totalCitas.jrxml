@@ -3,9 +3,6 @@
 	<property name="ireport.zoom" value="1.464100000000018"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["F:\\Versiones\\MundoD\\MundoDental\\web\\reportes\\"]]></defaultValueExpression>
-	</parameter>
 	<parameter name="Logo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -203,7 +200,16 @@
 	<summary>
 		<band height="100">
 			<subreport>
-				<reportElement x="0" y="0" width="200" height="100" uuid="bf4dc1dd-d457-4825-839e-64f90cd0a85e"/>
+				<reportElement positionType="Float" x="1" y="0" width="200" height="100" uuid="bf4dc1dd-d457-4825-839e-64f90cd0a85e"/>
+				<subreportParameter name="FechaFin">
+					<subreportParameterExpression><![CDATA[$P{FechaFin}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="Local">
+					<subreportParameterExpression><![CDATA[$P{Local}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FechaIni">
+					<subreportParameterExpression><![CDATA[$P{FechaIni}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{Grafica}]]></subreportExpression>
 			</subreport>
