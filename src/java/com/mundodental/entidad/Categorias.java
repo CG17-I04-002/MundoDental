@@ -19,8 +19,8 @@ public class Categorias {
     
     public Categorias(){
     }
-    public Categorias(int idCategoria, String categoria){
-        this.idCategoria=idCategoria;
+    public Categorias(String categoria){
+       /// this.idCategoria=idCategoria;
         this.categoria=categoria;
     }
      public int getIdCategoria(){

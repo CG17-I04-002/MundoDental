@@ -1,4 +1,3 @@
-
 package com.mundodental.entidad;
 
 import com.mundodental.anotaciones.AutoIncrement;
@@ -6,14 +5,15 @@ import com.mundodental.anotaciones.Entity;
 import com.mundodental.anotaciones.FieldName;
 import com.mundodental.anotaciones.NotNull;
 import com.mundodental.anotaciones.PrimaryKey;
+import java.math.BigDecimal;
 
 import java.sql.Date;
 
 @Entity(table = "Operaciones")
-public class Operaciones {
+public class operaciones {
     @PrimaryKey
     @AutoIncrement
-    @FieldName(name = "idOperaciones")
+    @FieldName(name = "idOperacion")
     private int idOperacion;
     @NotNull
     private String transaccion;
@@ -22,14 +22,16 @@ public class Operaciones {
     @NotNull
     private int idLocal;
     @NotNull
-    private double monto;
-    public Operaciones(){}
+    private BigDecimal monto;
+    private String flujo;
+    public operaciones(){}
     
-    public Operaciones(int idOperacion, String transaccion,Date fecha,int idLocal,double monto){
+    public operaciones(int idOperacion, String transaccion,Date fecha,int idLocal,String flujo,BigDecimal monto){
         this.idOperacion=idOperacion;
         this.transaccion=transaccion;
         this.fecha=fecha;
         this.idLocal=idLocal;
+        this.flujo=flujo;
         this.monto=monto;
     }
     
@@ -57,10 +59,16 @@ public class Operaciones {
     public void setIdLocal(int idLocal){
         this.idLocal=idLocal;
     }
-    public double getMonto(){
+    public String getFlujo() {
+        return flujo;
+    }
+
+    public void setFlujo(String flujo) {
+        this.flujo = flujo;
+    }
+    public BigDecimal getMonto(){
         return monto;
     }
-    public void setMonto(double monto){
+    public void setMonto(BigDecimal monto){
         this.monto=monto;
     }
-}

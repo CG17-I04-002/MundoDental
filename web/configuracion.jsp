@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="img/Solo logo.ico">
+        <link rel="shortcut icon" href="https://cdn.sstatic.net/Sites/es/img/favicon.ico?v=a8def514be8a">
         <title>Inicio</title>
 
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
@@ -30,7 +30,7 @@
             <div class="main">
                 <div class="card-columns">
 
-                    <a href="SConfiguracion?accion=1" class="opciones">
+                    <a href="SConfiguracion?accion=12" class="opciones">
                         <div class="card col-md-12">
                             <div class="card-body">
                                 <div class="row">
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="SConfiguracion?accion=2" class="opciones">
+                    <a href="SConfiguracion?accion=13" class="opciones">
 
                         <div class="card">
                             <div class="card-body">
@@ -55,13 +55,16 @@
                                         <i class="iconIndex fas fa-notes-medical"></i>
                                     </div>
                                     <div class="d-flex flex-column justify-content-center align-items-center  col-md-8 col-xs-12">
+                                        
                                         <p class="txt">Roles</p>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
-                    <a href="SConfiguracion?accion=3" class="opciones">
+                    <a href="SConfiguracion?accion=14" class="opciones">
+
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -69,7 +72,8 @@
                                         <i class="iconIndex fas fa-stethoscope"></i> 
                                     </div>
                                     <div class="d-flex flex-column justify-content-center align-items-center  col-md-8 col-xs-12">
-                                        <p class="txt">Privilegios</p>
+                                        
+                                        <p class="txt">Permisos</p>
                                     </div>
                                 </div>
                             </div>
@@ -77,6 +81,7 @@
                     </a>
                 </div>
             </div>
+
         </div>
     </body>
 </html>

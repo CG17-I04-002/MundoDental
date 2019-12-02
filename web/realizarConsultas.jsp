@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Consultas</title>
         <link rel="shortcut icon" href="img/Solo logo.ico">
-        
+
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
 
@@ -29,10 +29,18 @@
         <script src="js/responsive.bootstrap4.min.js" type="text/javascript"></script>
         <!-- Agregar Ventana modal-->
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        
+
         <script src="js/default.js" type="text/javascript"></script>
 
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="css/consultas.css" rel="stylesheet" type="text/css"/>
+        <script src="js/consultas.js" type="text/javascript"></script>
+        <style>#table01 td{ padding-top: 8px; cursor: pointer}
+        input[type="checkbox"][readonly] {
+  pointer-events: none;
+}</style>
+        
+        <link href="css/tabla.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <%@include file="menu.jsp" %>
@@ -41,198 +49,195 @@
                 <h5>
                     REGISTRO DE CONSULTAS
                 </h5>
-                <a class="btn btn-primary" href="Consultas?accion=mostrar"><i class="fas fa-eye"></i> Mostrar Consultas</a>
+                <a class="btn btn-primary" href="SConsultas?accion=mostrar"><i class="fas fa-eye"></i> Mostrar Consultas</a>
             </div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="main col-md-4">
+                        
                         <h5>Agregar Consultas</h5>
                         <hr>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#modalPac" data-whatever="@mdo"><i class="fas fa-check-circle"></i> Seleccionar Paciente</button><br>
                         <br>
-                        <form>
-                            <div class="form-group">
-                                <label>Paciente: <strong>Juan Perez</strong></label><br>
-                                <label>Membresía: <strong>Sí</strong></label>
+                        <form action="${pageContext.servletContext.contextPath}/SConsultas?accion=insertar_modificar" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Paciente</label>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <input type="text" class="form-control" name="txtIdPac" id="txtIdPac" value="${paciente.expediente}" readonly="readonly" required/>
+                                </div>
+                                <div class="form-group col-m-9">
+                                    <input type="text" class="form-control" name="txtPac" id="txtPac" value="${paciente.nombres} ${paciente.apellidos}" readonly="readonly" required/>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="cbTipo">Tipo de Consulta</label>
-                                <select class="browser-default custom-select" id="cbTipo">
-
-                                    <option selected value="1">Diagnostica</option>
-                                    <option value="2">Normal</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label><input type="checkbox" id="cbox1" value="1"  onclick="return false" <c:if test="${membresia==1}">checked</c:if>> Membresía</label>
+                                </div>
                             </div>
-                            <button class="btn btn-primary"><i class="fas fa-plus-circle" ></i> Agregar Consulta</button><br>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cbTipo">Tipo de Consulta</label>
+                                    <select class="browser-default custom-select col-md-12" id="cbTipo" name="cbTipo">
+                                        <option  value="Diagnostica">Diagnostica</option>
+                                        <option value="Normal" selected>Normal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    
+                                    <label for="cbDoctor">Doctor</label>
+                                    <select class="browser-default custom-select col-md-12" id="cbDoctor" name="cbDoctor">
+                                        <c:forEach  var="doc" items="${empleados}">
+                                            <option  <c:if test="${citas.idEmpleadoDoctor==doc.idEmpleado}">selected</c:if> value="${doc.idEmpleado}">${doc.nombres} ${doc.apellidos}</option>    
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle" ></i> Agregar Consulta</button><br>
 
                         </form>
-                        <div class="modal fade" id="modalPac" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                        <div class="modal fade" id="modalPac" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-check-circle"></i> Seleccionar Paciente</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle" ></i> Pacientes</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
+                                        ${tabla}
+                                        
 
-                                        <p>
-                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Nuevo Paciente</button>
-                                        </p>
-                                        <div class="collapse show multi-collapse" id="multiCollapseExample1">
-                                            <table id="tb2" class="table table-striped table-bordered" style="width:100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Paciente</th>
-                                                        <th>Telefono</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Juan Perez</td>
-                                                        <td>65656656</td>
-                                                    </tr>
-
-                                                </tbody>
-                                                <tfoot>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-
-                                        <div class="collapse multi-collapse" id="multiCollapseExample2">
-                                            <div class="card card-body">
-                                                <form>
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-6">
-                                                            <label for="txtNombres">Nombres</label>
-                                                            <input type="text" class="form-control" id="txtNom">
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label for="txtApe">Apellidos</label>
-                                                            <input type="text" class="form-control" id="txtApe" >
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="txtDir">Dirección</label>
-                                                        <input type="text" class="form-control" id="txtDir" >
-                                                    </div>
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-6">
-                                                            <label for="txtTel1">Telefono 1</label>
-                                                            <input type="text" class="form-control" id="txtTel1">
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label for="txtTel2">Telefono 2</label>
-                                                            <input type="text" class="form-control" id="txtTel2">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-
-                                                        <label for="txtFecha">Fecha de nacimiento</label>
-                                                        <input type="date" id="txtFecha" class="form-control"><br>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="txtEmail">Email</label>
-                                                        <input type="text" class="form-control" id="txtEmail" >
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">Agregar</button>
-
-                                                </form>
-                                            </div>
-                                        </div>
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="main col-md-8">
-                        <h5>Consultas Realizándose</h5>
+                        <h5>Consultas</h5>
                         <hr>
-                         <div id="accordion">
-                            <div class="card">
-                              <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Consulta Dr. House
-                                  </button>
-                                </h5>
-                              </div>
-
-                              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-body">
-                                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                </div>
-                              </div>
-                            </div>
-                            <div class="card">
-                              <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Consulta Dr. Chapatin
-                                  </button>
-                                </h5>
-                              </div>
-                              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                </div>
-                              </div>
-                            </div>
+                        <div id="accordion">
                             
-                          </div>
+                            <c:forEach  var="con" items="${consultas}">
+                               
+                                    
+                                <div class="card">
+                                    <div class="card-header ejemplo" id="headingOne">
+                                        <h5 class="mb-0">
+                                            <div class=" d-flex  justify-content-between align-items-center">
+                                                
+                                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${con.idConsulta}" aria-expanded="true" aria-controls="collapse${con.idConsulta}">
+                                                    <c:forEach  var="pac" items="${pacientes}">
+                                                        <c:if test="${con.expediente==pac.expediente}">${pac.nombres} ${pac.apellidos}</c:if> 
+                                                    </c:forEach>
+                                                </button>
+                                                    
+                                                <c:choose>
+                                                    <c:when test = "${con.estado == 'Proceso'}">
+                                                        <i class="fas fa-user-cog Proceso"></i>
+                                                    </c:when>
+                                                    <c:when test = "${con.estado == 'Completada'}">
+                                                        <i class="fas fa-user-check Completada"></i>
+                                                    </c:when>
+                                                    <c:when test = "${con.estado == 'Espera'}">
+                                                        <i class="fas fa-user-clock Espera"></i>
+                                                    </c:when>
+                                                </c:choose>
+                                            </div>
+                                                    
+                                                
+                                        </h5>
+                                    </div>
+
+                                    <div id="collapse${con.idConsulta}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                        <div class="card-body">
+                                            
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        
+                                                        <label>ID Consulta: </label>
+                                                        <input type="text"  class="form-control txt" readonly="readonly" size="5" value="${con.idConsulta}">
+                                                        
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        
+                                                        <label>Doctor: </label>
+                                                            
+                                                                
+                                                            <c:forEach  var="emp" items="${empleados}">
+                                                                <c:if test="${con.idEmpleadoDoctor==emp.idEmpleado}"><strong>${emp.nombres} ${emp.apellidos}</strong></c:if> 
+                                                            </c:forEach>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        
+                                                        <label>Estado Consulta: </label>
+                                                        <strong>${con.estado}</strong>
+                                                    </div>
+                                                    
+                                                </div>
+                                                                
+                                                        
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        
+                                                        <label>Tipo de consulta: </label>
+                                                        <strong>${con.tipoConsulta}</strong>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        
+                                                        <label>Costo: </label>
+                                                        <strong>$ ${con.costo}</strong>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        
+                                                        <label>Descuento: </label>
+                                                        <strong>$ ${con.descuento}</strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        
+                                                        <a href="SConsultas?accion=iniciar&id=${con.idConsulta}">Iniciar</a>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        
+                                                        <label>Total </label>
+                                                        <strong>$ ${con.total}</strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        
+                                                    </div>
+                                                    <div class="col-md-4  d-flex  justify-content-end">
+                                                        <input type="button" class="boton" value="Finalizar" onclick="enviar('${con.idConsulta}');">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+
+                            </c:forEach>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </body>
 </html>
+

@@ -95,7 +95,7 @@ public class Tabla {
     
     private String abrirTabla(){
         String alin = alineacion==1?"margin:auto":alineacion==2?"margin-left:0":"float:right;margin-top:0";
-        String cab = "<table id='"+estilo+"' style='width:"+ancho+";"+alin+"'>";
+        String cab = "<div class='table-responsive'><table id='"+estilo+"' class='table table-striped table-bordered'  style='width:"+ancho+";"+alin+"'>";
         return cab;
     }
     private String EncbzdTabla(){        
@@ -217,7 +217,7 @@ public class Tabla {
     }
 
     private String cerrarTabla(){
-        String cab = "</table>";
+        String cab = "</table></div>";
         return cab;
     }
     
