@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e3b0899a-ada0-4015-afc2-34b8b0d74900">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM Consultas;]]>
+	</queryString>
+	<field name="idConsulta" class="java.lang.Integer"/>
+	<field name="fecha" class="java.sql.Date"/>
+	<field name="horaIngreso" class="java.sql.Time"/>
+	<field name="horaFinalizacionConsulta" class="java.sql.Time"/>
+	<field name="tipoConsulta" class="java.lang.String"/>
+	<field name="costo" class="java.math.BigDecimal"/>
+	<field name="expediente" class="java.lang.Integer"/>
+	<field name="idLocal" class="java.lang.Integer"/>
+	<field name="descuento" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="idEmpleadoDoctor" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="43" forecolor="#009999" uuid="9525d58b-a8be-4db2-9205-15d3cb4462a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22"/>
+				</textElement>
+				<text><![CDATA[Total Consultas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="20" uuid="1408d94d-45d5-45c5-9eef-1c93c35c11c8"/>
+				<text><![CDATA[idConsulta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="50" height="20" uuid="e9368bed-23de-4a90-a848-e01641f47f39"/>
+				<text><![CDATA[fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="50" height="20" uuid="e270b977-5634-43d3-929d-ee0cceaa37a3"/>
+				<text><![CDATA[horaIngreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="50" height="20" uuid="9615f6cb-3e42-4992-9cbe-8467f33c6780"/>
+				<text><![CDATA[horaFinalizacionConsulta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="50" height="20" uuid="79e3433e-2f23-490b-8f29-3186ddf9562a"/>
+				<text><![CDATA[tipoConsulta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="50" height="20" uuid="b0ad0e14-7b81-4160-95d8-e10a24abc6f4"/>
+				<text><![CDATA[costo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="50" height="20" uuid="040b605f-2fb6-4c13-92c3-d08c4f64b9c3"/>
+				<text><![CDATA[expediente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="50" height="20" uuid="fbca73c3-7878-4381-b3ab-8d6608f12f0d"/>
+				<text><![CDATA[idLocal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="50" height="20" uuid="41f9a1c0-26e5-49e8-b996-da0f0eed3ac6"/>
+				<text><![CDATA[descuento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="0" width="50" height="20" uuid="0eb863e4-779c-48aa-8746-8a9ae4002d7d"/>
+				<text><![CDATA[total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="0" width="50" height="20" uuid="1098bbc2-6ac4-45c3-bc48-a029b55109ea"/>
+				<text><![CDATA[idEmpleadoDoctor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="50" height="20" uuid="a788c240-e369-4684-9f59-c99497b4cd95"/>
+				<textFieldExpression><![CDATA[$F{idConsulta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="0" width="50" height="20" uuid="49287065-9508-49af-a4ab-fde179670028"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="50" height="20" uuid="b271ecdd-80af-40cc-9d5d-daabd0e9a499"/>
+				<textFieldExpression><![CDATA[$F{horaIngreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="50" height="20" uuid="ec370027-b1b4-4085-88aa-094e4a41a98d"/>
+				<textFieldExpression><![CDATA[$F{horaFinalizacionConsulta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="50" height="20" uuid="56a3c71d-25fd-4444-959d-cdd7f986f1b2"/>
+				<textFieldExpression><![CDATA[$F{tipoConsulta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="50" height="20" uuid="6b7d284d-d1f7-4740-85bc-20bcd1f5a659"/>
+				<textFieldExpression><![CDATA[$F{costo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="50" height="20" uuid="1b1ccaa5-db3c-400c-a01a-3107b23145d3"/>
+				<textFieldExpression><![CDATA[$F{expediente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="0" width="50" height="20" uuid="7a480c61-1b71-4343-9642-d1c8ca77998c"/>
+				<textFieldExpression><![CDATA[$F{idLocal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="50" height="20" uuid="b7532988-f425-4da8-a3ed-6cb5028243ab"/>
+				<textFieldExpression><![CDATA[$F{descuento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="50" height="20" uuid="67053a78-4bd9-4ec8-9b9c-aede6420a430"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="0" width="50" height="20" uuid="05344dae-8158-4d70-b558-7a92c2c5d748"/>
+				<textFieldExpression><![CDATA[$F{idEmpleadoDoctor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
