@@ -32,7 +32,7 @@ public class FiltroPrincipal implements Filter {
         HttpServletRequest request =(HttpServletRequest) req;
         HttpServletResponse response= (HttpServletResponse) res;
         ///BORRAR CACHE 
-        /*response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Cache-Control", "no-store");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
@@ -66,10 +66,7 @@ public class FiltroPrincipal implements Filter {
             
         } else {
             response.sendRedirect("Login");
-        }*/
-        chain.doFilter(request,response);
-        
-        
+        }
     }
 
     

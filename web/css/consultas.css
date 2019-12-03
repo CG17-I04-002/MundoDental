@@ -11,7 +11,28 @@
     width:50px;
 }
 
+#txtTotal{
+    display: inline;
+    width:75px;
+}
+
 #tablaP {
      overflow:scroll;
      height:300px;
+}
+.Espera{
+    font-size:25px;
+    color: #c41c00;
+}
+
+.Proceso{
+    
+    font-size:25px;
+    color: #c7cc00;
+}
+
+.Completada{
+    
+    font-size:25px;
+    color: #32cb00;
 }

@@ -57,7 +57,7 @@
                 <button  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Nuevo Usuario</button>
             </div>
             <div class="main">
-                <form action="${pageContext.servletContext.contextPath}/SConfiguracion?accion=insertar_modificar" method="POST">
+                <form action="${pageContext.servletContext.contextPath}/SConfiguracion?accion=insertar_modificar_user" method="POST">
                     <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -71,31 +71,64 @@
                                     
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="txtNom">Usuario</label>
-                                            <input type="text" class="form-control" name="txtUsuario" id="txtNom" value="${usuario.usuario}">
-                                            <input type="hidden" class="form-control" name="txtHidden" id="txtNom" value="${usuario.usuario}">
+                                            <label for="txtUser">Usuario</label>
+                                            <input type="text" class="form-control" name="txtUser" id="txtUser" value="${usuario.usuario}">
+                                            <input type="hidden" class="form-control" name="txtUserh" id="txtUserh" value="${usuario.usuario}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="txtContrasena">Contraseña</label>
+                                            <input type="password" class="form-control" name="txtContrasena" id="txtContrasena" >
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="txtNom">Contraseña</label>
-                                            <input type="password" class="form-control" name="txtContrasena" id="txtNom" value="${usuario.contrasena}">
+                                            <label for="txtNom">Nombres</label>
+                                            <input type="text" class="form-control" name="txtNom" id="txtNom" value="${empleado.nombres}" >
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="txtApe">Apellidos</label>
+                                            <input type="text" class="form-control" name="txtApe" id="txtApe" value="${empleado.apellidos}">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                       
-                                        <select name="txtIdRol" >
-
-                                            <c:forEach var="item" items="${ro}">
-                                                <option value="${item.idRol}">${item.idRol}</option>
-                                            </c:forEach> 
-                                        </select>
+                                    <div class="form-row">
                                         
+                                        <div class="form-group col-md-6">
+                                            
+                                            <label for="cbEstado">Estado</label>
+                                            <select class="browser-default custom-select" id="cbEstado" name="cbEstado">
+                                                <option value="Activo">Activo</option>    
+                                                <option value="Inactivo">Inactivo</option> 
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            
+                                            <label for="txtTel">Telefono</label>
+                                            <input type="text" class="form-control" name="txtTel" id="txtTel" value="${empleado.telefono}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            
+                                            <label for="cbEstado">Rol</label>
+                                           <select class="browser-default custom-select" id="txtIdRol" name="txtIdRol" >
+                                                <c:forEach var="item" items="${ro}">
+                                                    <option value="${item.idRol}">${item.rol}</option>
+                                                </c:forEach> 
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            
+                                            <label for="cbEstado">Local</label>
+                                           <select class="browser-default custom-select" id="cbLocal" name="cbLocal" >
+                                                <c:forEach var="loc" items="${local}">
+                                                    <option value="${loc.idLocal}">${loc.local}</option>
+                                                </c:forEach> 
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                    <a href="SConfiguracion?" onclick="javascript: return window.history.back()">Regresar</a>
+                                     <a class="btn btn-primary"  href="SPacientes"> <i class="fas fa-arrow-left"></i> Regresar</a>
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
                                 </div>
                             </div>
