@@ -62,11 +62,9 @@
                         
                         <div class="form-group col-md-1">
                             <label>Búsqueda:</label>
-                            
                         </div>
                         <div class="form-group col-md-3">
-                            <input type="text" class="form-control" name="txtBusqueda" id="txtBusqueda" value="${valor}" />
-                            
+                            <input type="text" class="form-control" placeholder="Digite nombre" name="txtBusqueda" id="txtBusqueda" value="${valor}" />
                         </div>
                         <div class="form-group col-md-3">
                             <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>

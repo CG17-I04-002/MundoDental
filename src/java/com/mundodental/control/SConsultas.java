@@ -47,7 +47,7 @@ public class SConsultas extends HttpServlet {
         }
         if (accion == null) {
             int id =(int) request.getSession().getAttribute("idRol");
-            if(id == 2){
+            if(id == 3){
                 cargarTablaTra(request, response);
                 try {
                     Conexion conn = new ConexionPool();
@@ -190,7 +190,35 @@ public class SConsultas extends HttpServlet {
                 Operaciones.abrirConexion(conn);
                 Operaciones.iniciarTransaccion();
                 Consultas c = Operaciones.get(Integer.parseInt(request.getParameter("id")), new Consultas());
-                c.setEstado("Proceso");
+                if(validarProcesoDoctor(c.getIdEmpleadoDoctor())==0){
+
+                    c.setEstado("Proceso");
+                    c = Operaciones.actualizar(c.getIdConsulta(), c);
+                }
+                
+                Operaciones.commit();
+            }catch(Exception ex) {
+                try {
+                    Operaciones.rollback();
+                } catch (SQLException ex1) {
+                    Logger.getLogger(SConsultas.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }finally {
+                try {
+                    Operaciones.cerrarConexion();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SConsultas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            response.sendRedirect(request.getContextPath() + "/SConsultas");
+        }else if (accion.equals("cancelar")) {
+            try {
+                Conexion conn = new ConexionPool();
+                conn.conectar();
+                Operaciones.abrirConexion(conn);
+                Operaciones.iniciarTransaccion();
+                Consultas c = Operaciones.get(Integer.parseInt(request.getParameter("id")), new Consultas());
+                c.setEstado("Cancelada");
                 c = Operaciones.actualizar(c.getIdConsulta(), c);
                 
                 Operaciones.commit();
@@ -306,6 +334,35 @@ public class SConsultas extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/SConsultas");
                 break;
             }
+            case "finalizar_consulta":{
+                cargarTablaPac(request, response);
+            try {
+                Conexion conn = new ConexionPool();
+                conn.conectar();
+                Operaciones.abrirConexion(conn);
+                Operaciones.iniciarTransaccion();
+                Consultas c = Operaciones.get(Integer.parseInt(request.getParameter("id")), new Consultas());
+                c.setEstado("Finalizada");
+                c = Operaciones.actualizar(c.getIdConsulta(), c);
+                
+                Operaciones.commit();
+            }catch(Exception ex) {
+                try {
+                    Operaciones.rollback();
+                } catch (SQLException ex1) {
+                    Logger.getLogger(SConsultas.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }finally {
+                try {
+                    Operaciones.cerrarConexion();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SConsultas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            response.sendRedirect(request.getContextPath() + "/SConsultas");
+            }
+                
+                break;
         }
     }
 
@@ -419,7 +476,7 @@ public class SConsultas extends HttpServlet {
     private List<Empleados> getDoctores() throws SQLException {
         List<Empleados> doctores = new ArrayList();
         try {
-            String sql = "SELECT idEmpleado, nombres, apellidos   FROM Empleados ";
+            String sql = "SELECT e.idEmpleado, e.nombres, e.apellidos FROM Empleados e, Usuario u WHERE u.usuario = e.usuario AND u.idRol = 3";
             
             String[][] rs = Operaciones.consultar(sql, null);
             for (int i = 0; i < rs[0].length; i++) {
@@ -466,7 +523,7 @@ public class SConsultas extends HttpServlet {
     private List<Consultas> getConsultas() throws SQLException {
         List<Consultas> consultas = new ArrayList();
         try {
-            String sql = "SELECT * FROM Consultas WHERE NOT estado = 'Finalizada'";
+            String sql = "SELECT * FROM Consultas WHERE NOT estado = 'Finalizada' AND NOT estado ='Cancelada'";
             
             String[][] rs = Operaciones.consultar(sql, null);
             for (int i = 0; i < rs[0].length; i++) {
@@ -584,7 +641,23 @@ public class SConsultas extends HttpServlet {
         }
         return c;
     }
-    
+    private int validarProcesoDoctor(int id) throws SQLException {
+        int  encontrado = 0;
+        try {
+            String sql = "SELECT * FROM Consultas  WHERE estado='Proceso' AND  idEmpleadoDoctor = ?";
+            
+            List<Object> params = new ArrayList<>();
+            params.add(id);
+            
+            String[][] rs = Operaciones.consultar(sql, params);
+            if( rs.length>0){
+                encontrado = 1;
+            }
+        } catch (Exception ex) {
+            Operaciones.rollback();
+        }
+        return encontrado;
+    }
     
     
 }

@@ -145,9 +145,9 @@ public class SDoctores extends HttpServlet {
             Operaciones.iniciarTransaccion();
             String sql = "";
             if (request.getParameter("txtBusqueda") != null) {
-                sql = "SELECT e.nombres, e.apellidos, e.estado,  l.local FROM Empleados e, Locales l, Usuario u WHERE e.nombres LIKE ? AND e.idLocal = l.idLocal AND e.usuario =  u.usuario AND u.idRol =3 ; ";
+                sql = "SELECT e.idEmpleado, CONCAT(e.nombres,' ', e.apellidos), e.estado,  l.local FROM Empleados e, Locales l, Usuario u WHERE e.nombres LIKE ? AND e.idLocal = l.idLocal AND e.usuario =  u.usuario AND u.idRol =3 ; ";
             } else {
-                sql = "SELECT e.idEmpleado,e.nombres, e.apellidos, e.estado,  l.local FROM Empleados e, Locales l, Usuario u WHERE e.idLocal = l.idLocal AND e.usuario =  u.usuario AND u.idRol =3 ";
+                sql = "SELECT e.idEmpleado,CONCAT(e.nombres,' ', e.apellidos), e.estado,  l.local FROM Empleados e, Locales l, Usuario u WHERE e.idLocal = l.idLocal AND e.usuario =  u.usuario AND u.idRol =3 ";
             }
             String[][] doctores = null;
             if (request.getParameter("txtBusqueda") != null) {
@@ -158,7 +158,7 @@ public class SDoctores extends HttpServlet {
                 doctores = Operaciones.consultar(sql, null);
             }
             //declaracion de cabeceras a usar en la tabla HTML
-            String[] cabeceras = new String[]{"Codigo", "Nombre", "Apellido", "Estado", "Local"};//variable de tipo Tabla para generar la Tabla HTML
+            String[] cabeceras = new String[]{"Codigo", "Empleado", "Estado", "Local"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(doctores, //array quecontiene los datos
                     "100%", //ancho de la tabla px | % 
                     Tabla.STYLE.TABLE01, //estilo de la tabla

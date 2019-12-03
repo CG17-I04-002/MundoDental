@@ -95,7 +95,7 @@ body {
 	padding: 0;
 }
 .side-nav ul li {
-        height: 50px;
+        height: 47px;
 	border-bottom: 1px solid #3c506a;
 	position: relative;
 }
@@ -173,6 +173,12 @@ body {
 }
 .inic:hover{
     text-decoration: none;
+}
+
+.disabled{
+  pointer-events: none;
+  cursor: default;
+
 }
 /* set element styles to fit tablet and higher(desktop) */
 @media screen and (min-width: 600px) {

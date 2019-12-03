@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Compras</title>
+        <title>Ventas</title>
         <link rel="shortcut icon" href="img/Solo logo.ico">
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
@@ -35,6 +35,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
         <script src="js/default.js" type="text/javascript"></script>
+        <script src="js/operaciones.js" type="text/javascript"></script>
         <style>#table01 td{ padding-top: 8px; cursor: pointer}
             .pv{
                 width: 120px;
@@ -65,7 +66,7 @@
 
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <input type="text" class="form-control" name="txtId" id="txtIdp" value="${paciente.expediente}" readonly="readonly" required/>
+                                    <input type="text" class="form-control" name="txtIdp" id="txtIdp" value="${paciente.expediente}" readonly="readonly" required/>
 
                                 </div>
 
@@ -115,20 +116,33 @@
                                     <input type="button" value="..." class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" >
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <p>Precio:</p>
+                                    <p>Existencia</p>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" name="txtPrecioV" id="txtPrecioV"/>
+                                    <input type="text" class="form-control" name="txtExistencia" id="txtExistencia"/>
+                                </div>
+                                    
+                                <div class="form-group col-md-3">
+                                    <p>Precio</p>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <input type="text" class="form-control" name="txtCosto" id="txtCosto"/>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <p>Precio</p>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <input type="text" class="form-control" name="txtPrecio" id="txtPrecio"/>
                                 </div>
 
                                 <div class="form-group col-md-3" style="padding: 0px">
                                     <p>Cantidad:</p>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <input type="text" class="form-control" name="txtcantidad" id="txtcantidad">
+                                    <input type="text" class="form-control" name="txtCantidad" id="txtCantidad">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <button id="add" class="btn btn-primary" type="button" onclick="sumarmonto()" > Agregar Producto</button>
+                                    <button id="addV" class="btn btn-primary" type="button" > Agregar Producto</button>
                                 </div>
                             </div>
                             <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -142,23 +156,7 @@
                                         </div>
                                         <div class="modal-body">
                                             ${tabla}
-                                            <script>
-                                                //funcion javascript que se ejecuta al hacer click en una fila//recibe un elemento de tipo fila como parametro: row
-                                                function _Seleccionarp_(row) {
-                                                    ////recupera el idavion de la fila, en la celda 0
-                                                    var idProducto = row.cells[0].innerHTML;//recupera descripcion del avion de la fila, en la celda 1
-                                                    var nom = row.cells[1].innerHTML;//asigna a las cajas de texto de la ventana padre los valores//obtenidos'
-                                                    //asigna a las cajas de texto de la ventana padre los valores//obtenidos'
-                                                    document.getElementById("txtId").value = idProducto;
-                                                    document.getElementById("txtProd").value = nom;
-
-                                                    $(document).ready(function () {
-                                                        $("#exampleModal").modal("toggle");
-                                                    }
-                                                    );
-                                                    return false;
-                                                }
-                                            </script>
+                                            
                                         </div>
 
                                     </div>
@@ -216,7 +214,7 @@
                                             <th>ID</th>
                                             <th>PRODUCTOS</th>
                                             <th>COSTO</th>
-                                            <th>PRECIO VENTA</th>
+                                            <th>PRECIO</th>
                                             <th>CANTIDAD</th>
                                             <th>ELIMINAR</th>
                                         </tr>
@@ -234,22 +232,46 @@
                                         /**
                                          * Funcion para añadir una nueva fila en la tabla
                                          */
-                                        $("#add").click(function () {
+                                        $("#addV").click(function () {
                                             var id = document.getElementById("txtId").value;
                                             var producto = document.getElementById("txtProd").value;
-                                            var cantidad = document.getElementById("txtcantidad").value;
-                                            var consto = document.getElementById("txtCosto").value;
-                                            var pventa = document.getElementById("txtPrecioV").value;
-                                            var nuevaFila = "<tr><td><input type='text' value='" + id + "' name='id' class='form-control' readonly='readonly' ></td> \
-                                    <td><input type='text'value='" + producto + "' name='producto' class='form-control' readonly='readonly'></td> \
-                                    <td><input type='text'value='" + consto + "' name='costo'class='form-control' readonly='readonly'></td> \
-                                    <td><input type='text'value='" + pventa + "' name='precioVenta' class='form-control pv' readonly='readonly'></td> \
-                                    <td><input type='text'value='" + cantidad + "' name='cantidad' class='form-control'></td> \
-                                    <td><input type='button' class='del btn btn-danger' value='Eliminar'></td> \
-                            </tr>"
+                                            var precio = document.getElementById("txtPrecio").value;
+                                            var costo = document.getElementById("txtCosto").value;
+                                            var existencia = document.getElementById("txtExistencia").value;
+                                            var cantidad = document.getElementById("txtCantidad").value;
+                                            
+                                             if(document.getElementById("i"+id)){
+                                                var cant = parseInt(cantidad)+ parseInt(document.getElementById("c"+id).value);
+                                                if(cant>parseInt(existencia)){
+                                                    
+                                                     alert("Supera las existencias");
+                                                }else{
+                                                    document.getElementById("c"+id).value = cant;
+                                                    document.getElementById("txtTotal").value = parseFloat(document.getElementById("txtTotal").value)+ (parseFloat(cantidad)*parseFloat(precio));
+                                                }
+                                             }else{
+                                                 if(parseInt(cantidad)>parseInt(existencia)){
+                                                     alert("Supera las existencias");
+                                                 }else{
+                                                     var nuevaFila = "<tr><td><input type='text' value='" + id + "' id='i"+id+"' name='id' class='form-control' readonly='readonly' ></td> \
+                                                            <td><input type='text'value='" + producto + "' name='producto' class='form-control' readonly='readonly'></td> \
+                                                            <td><input type='text'value='" + costo + "' id='cos"+id+"' name='costo'class='form-control' readonly='readonly'></td> \
+                                                            <td><input type='text'value='" + precio + "' id='p"+id+"'  name='precioVenta' class='form-control'></td> \
+                                                            <td><input type='text'value='" + cantidad + "' id='c"+id+"'  name='cantidad' class='form-control'></td> \
+                                                            <td><input type='button' onclick='restarV("+id+");' class='del btn btn-danger' value='Eliminar'></td> \
+                                                    </tr>"
 
-                                                    ;
-                                            $("#tabla tbody").append(nuevaFila);
+                                                                            ;
+                                                                    $("#tabla tbody").append(nuevaFila);
+                                                                    
+                                                                    document.getElementById("txtTotal").value = parseFloat(document.getElementById("txtTotal").value)+ (parseFloat(cantidad)*parseFloat(precio));
+                                                 }
+                                                  
+                                                  
+                                                  
+                                             }
+       
+                                           
                                         });
 
                                         // evento para eliminar la fila
@@ -259,6 +281,16 @@
 
                                     });
                                 </script>
+                                <strong>Total: $</strong><input type="text" class="form-control" name="txtTotal" id="txtTotal" readonly="readonly" size="25" required value="0"/>
+                                <c:if test="${resultado!=null}">
+                                    <c:if test="${resultado==1}">
+                                        <p style="color:darkgreen"><strong>Operación realizada correctamente.</strong></p>
+                                    </c:if>
+                                    <c:if test="${resultado==0}">
+                                        <p style="color:darkred"><strong>La operación no se realizó.</strong></p>
+                                    </c:if>
+
+                                </c:if>
                             </div>
                         </div>
                     </div>

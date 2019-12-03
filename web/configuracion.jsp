@@ -7,8 +7,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="https://cdn.sstatic.net/Sites/es/img/favicon.ico?v=a8def514be8a">
-        <title>Inicio</title>
+        <link rel="shortcut icon" href="img/Solo logo.ico">
+        <title>Configuración</title>
 
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>

@@ -3,6 +3,11 @@ function enviar(id){
     
      document.location.href ="SConsultas?accion=finalizar&id="+id;
 }
+function cancelar(id){
+    
+     document.location.href ="SConsultas?accion=cancelar&id="+id;
+}
+
 
 //funcion javascript que se ejecuta al hacer click en una fila//recibe un elemento de tipo fila como parametro: row
 function _Seleccionar_(row) {

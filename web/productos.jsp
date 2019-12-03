@@ -54,7 +54,7 @@
                 <h5>
                     DATOS DE LOS PRODUCTOS
                 </h5>
-                <button  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Nuevo Paciente</button>
+                <button  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Nuevo Producto</button>
             </div>
             <div class="main">
                 <form action="${pageContext.servletContext.contextPath}/SProductos?accion=insertar_modificar" method="POST">

@@ -250,7 +250,7 @@ public class SProductos extends HttpServlet {
             //declaracion de cabeceras a usar en la tabla HTML
             String[] cabeceras = new String[]{"ID Producto", "Nombre", "Detalle Producto", "Categoria"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(productos, //array quecontiene los datos
-                    "50%", //ancho de la tabla px | % 
+                    "100%", //ancho de la tabla px | % 
                     Tabla.STYLE.TABLE01, //estilo de la tabla
                     Tabla.ALIGN.LEFT, // alineacion de la tabla
                     cabeceras);

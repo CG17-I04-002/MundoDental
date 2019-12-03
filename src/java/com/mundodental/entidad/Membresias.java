@@ -22,15 +22,26 @@ public class Membresias {
     private BigDecimal monto;
     @NotNull
     private int expediente;
+    
+    private BigDecimal porcentaje;
 
     public Membresias() {
     }
 
-    public Membresias(Date fechaRegistro, Date fechaVencimiento, BigDecimal monto, int expediente) {
+    public Membresias(Date fechaRegistro, Date fechaVencimiento, BigDecimal monto, int expediente, BigDecimal porcentaje) {
         this.fechaRegistro = fechaRegistro;
         this.fechaVencimiento = fechaVencimiento;
         this.monto = monto;
         this.expediente = expediente;
+        this.porcentaje = porcentaje;
+    }
+
+    public BigDecimal getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(BigDecimal porcentaje) {
+        this.porcentaje = porcentaje;
     }
 
     public int getIdMembresia() {

@@ -72,3 +72,4 @@ public class operaciones {
     public void setMonto(BigDecimal monto){
         this.monto=monto;
     }
+}

@@ -1,11 +1,4 @@
-<%@page import="java.sql.SQLException"%>
-<%@page import="com.mundodental.control.Principal"%>
-<%@page import="java.util.logging.Logger"%>
-<%@page import="java.util.logging.Level"%>
-<%@page import="com.mundodental.operaciones.Operaciones"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.mundodental.conexion.ConexionPool"%>
-<%@page import="com.mundodental.entidad.Menu"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -14,7 +7,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Productos</title>
+        <title>Permisos</title>
         <link rel="shortcut icon" href="img/Solo logo.ico">
 
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
@@ -62,51 +55,51 @@
                 <h5>
                     DATOS DE LOS PERMISOS
                 </h5>
-                <button  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Nuevo Permiso</button>
             </div>
             <div class="main">
-                <form action="${pageContext.servletContext.contextPath}/SConfiguracion?accion=insertar_modificar" method="POST">
+                <form action="${pageContext.servletContext.contextPath}/SConfiguracion?accion=insertar_permiso" method="POST">
                     <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle" ></i> Nuevo Permiso</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle" ></i> Editar Permisos</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="txtNom">Id Permiso</label>
-                                            <input type="text" class="form-control" readonly="true" name="txtIdPermiso" id="txtNom" value="${permiso.idpermiso}">
+                                    <div class="container-fluid">
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="txtIdRol">ID Rol</label>
+                                                <input type="text" class="form-control" readonly="true" name="txtIdRol" id="txtIdRol" value="${rol.idRol}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="txtRol">Rol</label>
+                                                <input type="text" class="form-control" readonly="true" name="txtRol" id="txtRol" value="${rol.rol}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+
+                                                <c:forEach  var="m" items="${menu}">
+                                                    
+                                                    <div class="form-group col-md-4">
+                                                        <label><input type="checkbox" 
+                                                               <c:forEach  var="per" items="${permiso}">       
+                                                                      <c:if test="${m.idmenu==per.idmenu}">checked</c:if>
+                                                                
+                                                                </c:forEach>    
+                                                                id="cb${m.idmenu}" name="cb${m.idmenu}" value="${m.idmenu}"> ${m.menu}</label> 
+                                                    </div>
+                                            </c:forEach> 
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                       
-                                        <select name="txtIdMenu" >
 
-                                            <c:forEach var="item" items="${menus}">
-                                                <option value="${item.idmenu}">${item.idmenu}</option>
-                                            </c:forEach> 
-                                        </select>
-                                        
-                                    </div>
-                                        <div class="form-group">
-                                       
-                                        <select name="txtIdRol" >
-
-                                            <c:forEach var="item" items="${roles}">
-                                                <option value="${item.idRol}">${item.idRol}</option>
-                                            </c:forEach> 
-                                        </select>
-                                        
-                                    </div>
-                                        
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-                                    <a href="SConfiguracion?" onclick="javascript: return window.history.back()">Regresar</a>
+                                    <a class="btn btn-primary"  href="SConfiguracion?accion=14" onclick="javascript: return window.history.back()"> <i class="fas fa-arrow-left"></i> Regresar</a>
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
                                 </div>
                             </div>
@@ -132,7 +125,7 @@
             </div>
 
         </div>
-               
+
 
     </body>
 </html>

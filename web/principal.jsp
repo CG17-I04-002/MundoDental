@@ -29,72 +29,20 @@
             </div>
             <div class="main">
                 <div class="card-columns">
+                    <c:forEach var="menu" items="${MenuPrincipal}">
+                        <a class="opcM" href="${pageContext.servletContext.contextPath}${menu.url}?accion=${menu.idmenu}">
+                            <div class="card col-md-12">
+                                <div class="card-body">
+                                    <div class="row d-flex justify-content-center align-items-center">
+                                        
+                                         <h1>${menu.menu}</h1>
 
-                    <a href="jsp/pacientes.jsp" class="opciones">
-                        <div class="card col-md-12">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="d-flex justify-content-center align-items-center  col-md-4 col-xs-12">
-                                        <i class="iconIndex fas fa-user-md"></i>
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center align-items-center  col-md-8 col-xs-12">
-                                        <p class="n">3</p>
-                                        <p class="txt">Doctores</p>
-
+                                        
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="Citas" class="opciones">
-
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="d-flex justify-content-center align-items-center  col-md-4 col-xs-12">
-                                        <i class="iconIndex fas fa-notes-medical"></i>
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center align-items-center  col-md-8 col-xs-12">
-                                        <p class="n">3</p>
-                                        <p class="txt">Citas</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="Consultas" class="opciones">
-
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class=" d-flex justify-content-center align-items-center  col-md-4 col-xs-12">
-                                        <i class="iconIndex fas fa-stethoscope"></i> 
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center align-items-center  col-md-8 col-xs-12">
-                                        <p class="n">3</p>
-                                        <p class="txt">Consultas</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="Ventas" class="opciones">
-
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="d-flex justify-content-center align-items-center  col-md-4 col-xs-12">
-                                        <i class="iconIndex fas fa-cart-plus"></i>
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-center align-items-center  col-md-8 col-xs-12">
-                                        <p class="n">3</p>
-                                        <p class="txt">Ventas</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </c:forEach>
                 </div>
             </div>
 

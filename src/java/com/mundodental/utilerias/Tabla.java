@@ -181,7 +181,7 @@ public class Tabla {
                 else
                     enlaceModificable = "<img src='"+this.pageContext + getIconoModificable()+"'/>";
                 
-                Tabla +="<td><a onclick=\"return confirm('¿Está seguro?')\" href='"+getPaginaModificable() + (getPaginaEliminable().contains("?") ? "&" : "?")  +"id="+rst[0][k]+"'>"
+                Tabla +="<td><a onclick=\"return confirm('¿Está seguro?')\" href='"+getPaginaModificable() + (getPaginaModificable().contains("?") ? "&" : "?")  +"id="+rst[0][k]+"'>"
                         +enlaceModificable+"</a></td>"; 
            }
 //           if (isSeleccionable()){

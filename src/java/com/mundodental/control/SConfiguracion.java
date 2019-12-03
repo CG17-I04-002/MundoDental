@@ -221,7 +221,9 @@ public class SConfiguracion extends HttpServlet {
 
                             Roles r = Operaciones.get(request.getParameter("id"), new Roles());
                             List<Menu> menu = getMenu();
+                            List<Permiso> permiso = getPermisos(Integer.parseInt(request.getParameter("id")));
                             request.setAttribute("rol", r);
+                            request.setAttribute("permiso", permiso);
 
                             request.setAttribute("menu", menu);
 
@@ -739,6 +741,28 @@ public class SConfiguracion extends HttpServlet {
             Operaciones.rollback();
         }
         return id;
+    }
+    private List<Permiso> getPermisos(int rol) throws SQLException {
+        List<Permiso> permiso = new ArrayList();
+        try {
+            String sql = "SELECT * FROM permiso WHERE idrol = ? ";
+            List<Object> param = new ArrayList();
+           
+            param.add(rol);
+            String[][] rs = Operaciones.consultar(sql, param);
+            for (int i = 0; i < rs[0].length; i++) {
+                Permiso p = new Permiso();
+                p.setIdpermiso(Integer.parseInt(rs[0][i]));
+                p.setIdmenu(Integer.parseInt(rs[1][i]));
+                p.setIdrol(Integer.parseInt(rs[2][i]));
+                permiso.add(p);
+
+            }
+
+        } catch (Exception ex) {
+            Operaciones.rollback();
+        }
+        return permiso;
     }
 
 }

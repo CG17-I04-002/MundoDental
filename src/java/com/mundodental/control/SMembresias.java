@@ -57,6 +57,10 @@ public class SMembresias extends HttpServlet {
         cargarTablaPacientes(request, response);
         cargarTablaBeneficiarios(request, response);
         if (accion == null) {
+            if (request.getSession().getAttribute("resultado") != null) {
+                request.setAttribute("resultado", request.getSession().getAttribute("resultado"));
+                request.getSession().removeAttribute("resultado");
+            }
             request.getRequestDispatcher("membresia.jsp").forward(request, response);
         } 
             else if (accion.equals("mostrar")) {
@@ -77,6 +81,7 @@ public class SMembresias extends HttpServlet {
                 String fechaVencimiento = request.getParameter("txtfechaVencimiento");
                 String monto = request.getParameter("txtMonto");
 
+                String por = request.getParameter("txtPor");
                 String[] idMembresia = request.getParameterValues("id");
                 // String[] Producto = request.getParameterValues("producto");
                
@@ -107,7 +112,7 @@ public class SMembresias extends HttpServlet {
                     m.setExpediente(Integer.parseInt(expediente));
                     
                     m.setMonto(BigDecimal.valueOf(Double.parseDouble(monto)));
-                    
+                    m.setPorcentaje(BigDecimal.valueOf(Double.parseDouble(por)));
                     m = Operaciones.insertar(m);
                     for (int i = 0; i < idMembresia.length; i++) {
                         Membresias_Beneficiarios mb = new Membresias_Beneficiarios();
@@ -171,7 +176,7 @@ public class SMembresias extends HttpServlet {
             //array con las cabeceras de la tabla
             //boton eliminar
 
-            tab.setMetodoFilaSeleccionable("_Seleccionarp_");
+            tab.setMetodoFilaSeleccionable("_SeleccionarP_");
             tab.setPageContext(request.getContextPath());
             tab.setFilaSeleccionable(true);//icono para modificar y eliminar// 
             tab.setIconoModificable("/iconos/edit.png");// 
@@ -223,7 +228,7 @@ public class SMembresias extends HttpServlet {
             //array con las cabeceras de la tabla
             //boton eliminar
 
-            tab.setMetodoFilaSeleccionable("_Seleccionarb_");
+            tab.setMetodoFilaSeleccionable("_SeleccionarB_");
             tab.setPageContext(request.getContextPath());
             tab.setFilaSeleccionable(true);//icono para modificar y eliminar// 
             tab.setIconoModificable("/iconos/edit.png");// 

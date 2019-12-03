@@ -80,7 +80,7 @@
                                 <div class="form-group">
                                     <label for="cbTipo">Tipo de Consulta</label>
                                     <select class="browser-default custom-select col-md-12" id="cbTipo" name="cbTipo">
-                                        <option  value="Diagnostica">Diagnostica</option>
+                                        <option  value="Diagnostico">Diagnostica</option>
                                         <option value="Normal" selected>Normal</option>
                                     </select>
                                 </div>
@@ -130,7 +130,8 @@
                             
                             <c:forEach  var="con" items="${consultas}">
                                
-                                    
+                                <form>
+                                </form>
                                 <div class="card">
                                     <div class="card-header ejemplo" id="headingOne">
                                         <h5 class="mb-0">
@@ -206,23 +207,33 @@
                                                         <strong>$ ${con.descuento}</strong>
                                                     </div>
                                                 </div>
+                                                    
+                                                    
                                                 <div class="row">
-                                                    <div class="col-md-8">
-                                                        
-                                                        <a href="SConsultas?accion=iniciar&id=${con.idConsulta}">Iniciar</a>
-                                                        
+                                                    
+                                                    <div class="col-md-4">
                                                     </div>
+                                                        
                                                     <div class="col-md-4">
                                                         
                                                         <label>Total </label>
                                                         <strong>$ ${con.total}</strong>
                                                     </div>
                                                 </div>
+                                                 <div class="row">
+                                                    <div class="col-md-8">
+                                                        <br>
+                                                        <a <c:if test="${con.estado == 'Proceso'}">class='disabled'</c:if>  href="SConsultas?accion=iniciar&id=${con.idConsulta}">Iniciar</a>
+                                                    </div>
+                                                    
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         
                                                     </div>
                                                     <div class="col-md-4  d-flex  justify-content-end">
+                                                        
+                                                        <input type="button" class="boton" value="Cancelar" onclick="cancelar('${con.idConsulta}');">
                                                         <input type="button" class="boton" value="Finalizar" onclick="enviar('${con.idConsulta}');">
                                                     </div>
                                                 </div>

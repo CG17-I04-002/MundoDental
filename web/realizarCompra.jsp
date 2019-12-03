@@ -33,10 +33,11 @@
         <!-- Agregar Ventana modal-->
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <script src="js/operaciones.js" type="text/javascript"></script>
+        
         <script src="js/default.js" type="text/javascript"></script>
         <link href="css/operaciones.css" rel="stylesheet" type="text/css"/>
         <link href="css/tabla.css" rel="stylesheet" type="text/css"/>
+        <script src="js/operaciones.js" type="text/javascript"></script>
     </head>
     <body>
 
@@ -78,7 +79,7 @@
                                     <p>Fecha:</p>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <input type="date" class="form-control" name="txtfecha" id="txtfecha"/>
+                                    <input type="date" class="form-control" name="txtfecha" id="txtfecha" required=""/>
                                 </div>
                                 <div class="form-group col-md-3" style="padding: 0px">
                                     <p>Seleccionar Producto:</p>
@@ -159,7 +160,7 @@
                         <div class="main col-md-8">
                             <div class="col-md-12">
                                 <div class="row justify-content-between columna2">
-                                    <H5>PRODUCTOS AÃ‘ADIDOS</H5>
+                                    <H5>PRODUCTOS AGREGADOS</H5>
                                     <input type="submit" value="Registrar Compra" class="btn btn-primary">
                                 </div>
                                 <hr>
@@ -177,7 +178,16 @@
                                     <tbody>
                                     </tbody>
                                 </table>
+                                <strong>Total: $</strong><input type="text" class="form-control" name="txtTotal" id="txtTotal" readonly="readonly" size="25" required value="0"/>
+                                <c:if test="${resultado!=null}">
+                                    <c:if test="${resultado==1}">
+                                        <p style="color:darkgreen"><strong>Operación realizada correctamente.</strong></p>
+                                    </c:if>
+                                    <c:if test="${resultado==0}">
+                                        <p style="color:darkred"><strong>La operación no se realizó.</strong></p>
+                                    </c:if>
 
+                                </c:if> 
                             </div>
                             <div>
                                 <br>

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="existencias" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e84d0fdd-61b0-48aa-ab91-9ed31b727bea">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Logo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Local" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FechaIni" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FechaFin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT L.Local AS Clinica,P.IDProducto AS ID, P.Nombre AS Producto, C.Categoria AS Categoria,
+	SUM(CASE WHEN O.Transaccion = 'Compra'THEN OP.Cantidad ELSE -OP.Cantidad END) AS Existencias
+FROM Operaciones O, Operaciones_Detalles OP, Productos P, Locales L, Categorias C
+WHERE  O.IDOperacion = OP.IDOperacion AND OP.IDProducto = P.IDProducto AND O.IDLocal = L.IDLocal
+	AND O.IDLocal = $P{Local} AND O.Fecha BETWEEN $P{FechaIni} AND $P{FechaFin}
+GROUP BY P.IDProducto, P.Nombre, C.Categoria, L.Local;]]>
+	</queryString>
+	<field name="Clinica" class="java.lang.String"/>
+	<field name="ID" class="java.lang.Integer"/>
+	<field name="Producto" class="java.lang.String"/>
+	<field name="Categoria" class="java.lang.String"/>
+	<field name="Existencias" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="-3" width="555" height="75" backcolor="#006599" uuid="cac49a61-d43e-4e4c-a686-63d71d08d751"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="-1" y="14" width="555" height="50" forecolor="#FFFFFF" uuid="38731d3a-4fcf-4083-964c-4ec0e8c34841"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de existencias]]></text>
+			</staticText>
+			<image>
+				<reportElement x="15" y="-3" width="91" height="75" uuid="1a2a1768-a715-4e09-b68a-639c878990ef"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="465" y="-3" width="91" height="75" uuid="6ec35c03-30a0-47c0-ad84-be0c78eba2ac"/>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="0" width="100" height="20" uuid="a40c8875-08fc-4e21-906f-9dc5e08aabcc"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Clínica:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="56" y="0" width="100" height="20" uuid="48008e73-5ed3-4682-954d-a82eb398d174"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Clinica}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="347" y="0" width="148" height="20" uuid="3d1945d9-2a25-4ecd-b34c-410552f0cefc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="241" y="0" width="110" height="20" uuid="61803d5c-1503-4f1e-b078-7b2bca8d03d4"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Reporte generado: ]]></text>
+			</staticText>
+			<textField pattern="K:mm a">
+				<reportElement x="497" y="0" width="57" height="20" uuid="c0a0680b-0377-46e5-bf31-7379ff5a74c8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="46" y="20" width="70" height="20" uuid="7457a854-14ad-4880-9541-a38d301c3fa9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FechaIni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="146" y="20" width="70" height="20" uuid="76594aa2-66d9-4f4b-886c-88aba4f157d3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FechaFin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="20" width="35" height="20" uuid="b565bef2-25d8-4595-90f9-3d08b98074f6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Inicio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="20" width="24" height="20" uuid="bede30d7-2dab-4610-b1d8-2116e5a533bb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fin:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="0" width="138" height="22" backcolor="#009999" uuid="536a450d-58ef-4175-9baf-a8345c342f1d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="140" y="0" width="138" height="22" backcolor="#009999" uuid="a5eadbcc-cac6-44c5-93d2-9e15cad81f3f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="278" y="0" width="138" height="22" backcolor="#009999" uuid="1e35d93f-2d19-4b29-bc73-5880c97d4d1f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="416" y="0" width="138" height="22" backcolor="#009999" uuid="5512c077-5357-4922-8b53-da158b09983c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Existencias]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="138" height="25" uuid="58e9d7ec-a176-459e-8a76-53e6343e2ef0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="138" height="25" uuid="c77a157c-bea0-4950-9296-ef848c490fc0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="278" y="0" width="138" height="25" uuid="41baf86c-26af-4935-929d-c206272313e3"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Categoria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="416" y="0" width="138" height="25" uuid="e7d85b63-7deb-41db-a3a7-a46ac4e772ed"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Existencias}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="1" width="80" height="20" uuid="1491a45c-52b5-4188-93a4-1d1a87a5cd1e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="1" width="40" height="20" uuid="19a5cbe1-1ca0-448c-bdff-496cf75347d4"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="213">
+			<pie3DChart>
+				<chart>
+					<reportElement x="1" y="39" width="555" height="174" uuid="3ef0bf6a-865d-4ae7-aa51-8bc82f19fec7"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{Producto}]]></keyExpression>
+					<valueExpression><![CDATA[$F{Existencias}]]></valueExpression>
+					<labelExpression><![CDATA[$F{Producto}+": "+$F{Existencias}]]></labelExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</summary>
+</jasperReport>

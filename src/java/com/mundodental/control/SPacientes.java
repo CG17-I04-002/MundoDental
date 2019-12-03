@@ -45,7 +45,7 @@ public class SPacientes extends HttpServlet {
             cargarTabla(request, response);
 
             request.getRequestDispatcher("pacientes.jsp").forward(request, response);
-        } else if (accion.equals("modificar")) {
+        }else if (accion.equals("modificar")) {
             cargarTabla(request, response);
             try {
                 Conexion conn = new ConexionPool();
@@ -70,7 +70,7 @@ public class SPacientes extends HttpServlet {
                 }
             }
             request.getRequestDispatcher("pacientes.jsp").forward(request, response);
-        } else if (accion.equals("eliminar")) {
+        }else if (accion.equals("eliminar")) {
 
             try {
                 Conexion conn = new ConexionPool();
@@ -98,7 +98,7 @@ public class SPacientes extends HttpServlet {
                     Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            response.sendRedirect(request.getContextPath() + "/SPacientes");
+                response.sendRedirect(request.getContextPath() + "/SPacientes");
         }
 
     }
@@ -109,12 +109,11 @@ public class SPacientes extends HttpServlet {
         String accion = request.getParameter("accion");
         switch (accion) {
             case "insertar_modificar": {
-                String expediente = request.getParameter("txtIdPaciente");
                 String nombre = request.getParameter("txtNom");
                 String ape = request.getParameter("txtApe");
                 String fecha = request.getParameter("txtFecha");
-                ///String tel1 = request.getParameter("txtTel1");
-                String tel = request.getParameter("txtTel");
+                String tel1 = request.getParameter("txtTel");
+                String expediente = request.getParameter("expediente");
                 String dir = request.getParameter("txtDir");
                 String email = request.getParameter("txtEmail");
                 try {
@@ -123,12 +122,13 @@ public class SPacientes extends HttpServlet {
                     Operaciones.abrirConexion(conn);
                     Operaciones.iniciarTransaccion();
                     Pacientes pac = new Pacientes();
-                    if (!fecha.equals("") && fecha != null) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        Date date = sdf.parse(fecha);
-                        java.sql.Date d = new java.sql.Date(date.getTime());
-                        pac.setFechaNacimiento(d);
-                    }
+                    
+                    if(!fecha.equals("") && fecha!=null){
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            Date date = sdf.parse(fecha);
+                            java.sql.Date d = new java.sql.Date(date.getTime());
+                            pac.setFechaNacimiento(d);
+                        }
                     pac.setNombres(nombre);
                     pac.setApellidos(ape);
                     pac.setDireccion(dir);
@@ -136,23 +136,26 @@ public class SPacientes extends HttpServlet {
                     pac.setEmail(email);
                     if (expediente != null && !expediente.equals("")) {
                         pac.setExpediente(Integer.parseInt(expediente));
+                        
                         pac = Operaciones.actualizar(pac.getExpediente(), pac);
-
+                        
                     } else {
                         pac = Operaciones.insertar(pac);
                     }
-                    else {
-                            request.getSession().setAttribute("resultado", 0);
-                        }
+                    if (pac.getExpediente() != 0) {
+                        request.getSession().setAttribute("resultado", 1);
+                    } else {
+                        request.getSession().setAttribute("resultado", 0);
                     }
                     Operaciones.commit();
+                    
                 } catch (Exception ex) {
                     try {
                         Operaciones.rollback();
                     } catch (SQLException ex1) {
                         Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex1);
                     }
-                    request.getSession().setAttribute("resultado", 2);
+                    request.getSession().setAttribute("resultado", 0);
                     ex.printStackTrace();
                 } finally {
                     try {
@@ -178,9 +181,9 @@ public class SPacientes extends HttpServlet {
             Operaciones.iniciarTransaccion();
             String sql = "";
             if (request.getParameter("txtBusqueda") != null) {
-                sql = "select * from pacientes where nombres like ?";
+                sql = "SELECT expediente,nombres,apellidos, fechaNacimiento,(CASE WHEN telefono = '' THEN '-' ELSE telefono END), (CASE WHEN direccion = '' THEN '-' ELSE direccion END), (CASE WHEN email = '' THEN '-' ELSE email END) FROM Pacientes where nombres like ?";
             } else {
-                sql = "select * from pacientes";
+                sql = "SELECT expediente,nombres,apellidos, fechaNacimiento,(CASE WHEN telefono = '' THEN '-' ELSE telefono END), (CASE WHEN direccion = '' THEN '-' ELSE direccion END), (CASE WHEN email = '' THEN '-' ELSE email END) FROM Pacientes";
             }
             String[][] pacientes = null;
             if (request.getParameter("txtBusqueda") != null) {
@@ -191,10 +194,10 @@ public class SPacientes extends HttpServlet {
                 pacientes = Operaciones.consultar(sql, null);
             }
             //declaracion de cabeceras a usar en la tabla HTML
-            String[] cabeceras = new String[]{"ID Paciente", "Nombre", "Apellido", "Fech. Nac.", "telefono", "direccion", "email"};//variable de tipo Tabla para generar la Tabla HTML
+            String[] cabeceras = new String[]{"Expediente", "Nombre", "Apellido", "Fecha Nac.", "Teléfono", "Dirección", "Email"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(pacientes, //array quecontiene los datos
                     "100%", //ancho de la tabla px | % 
-                    "tb1", //estilo de la tabla
+                    Tabla.STYLE.TABLE01, //estilo de la tabla
                     Tabla.ALIGN.LEFT, // alineacion de la tabla
                     cabeceras);
             //array con las cabeceras de la tabla
@@ -207,9 +210,9 @@ public class SPacientes extends HttpServlet {
             tab.setPaginaSeleccionable("/SPacientes?accion=modificar");//icono para modificar y eliminar
             tab.setIconoModificable("/iconos/edit.png");
             tab.setIconoEliminable("/iconos/delete.png"); //columnas seleccionables
-            //tab.setColumnasSeleccionables(new int[]{1});//pie de tabla
+            tab.setColumnasSeleccionables(new int[]{1});//pie de tabla
             tab.setPie("Resultado de pacientes");
-            //imprime la tabla enpantalla
+            //imprime la tabla en pantalla
             String tabla01 = tab.getTabla();
             request.setAttribute("tabla", tabla01);
             request.setAttribute("valor", request.getParameter("txtBusqueda"));

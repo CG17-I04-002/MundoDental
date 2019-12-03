@@ -66,6 +66,10 @@ public class SCompras extends HttpServlet {
         cargarTabla(request, response);
         cargarTablacompras(request, response);
         if (accion == null) {
+            if (request.getSession().getAttribute("resultado") != null) {
+                request.setAttribute("resultado", request.getSession().getAttribute("resultado"));
+                request.getSession().removeAttribute("resultado");
+            }
             request.getRequestDispatcher("realizarCompra.jsp").forward(request, response);
         } else if (accion.equals("mostrar")) {
             cargarTablacompras(request, response);
@@ -83,8 +87,8 @@ public class SCompras extends HttpServlet {
                 String idLocal = request.getParameter("cblocal");
                 String fecha = request.getParameter("txtfecha");
                 String flujo = request.getParameter("txtflujo");
-                String monto = request.getParameter("txtmonto");
-                double jose = 0;
+                String monto = request.getParameter("txtTotal");
+                
 
                 String[] idProducto = request.getParameterValues("id");
                 // String[] Producto = request.getParameterValues("producto");
@@ -102,16 +106,14 @@ public class SCompras extends HttpServlet {
                     Date date = sdf.parse(fecha);
                     Operaciones_Detalles o = new Operaciones_Detalles();
 
-                    for (int i = 0; i < idProducto.length; i++) {
-                        jose += Double.parseDouble(costo[i]);
-                    }
+                    
                     java.sql.Date d = new java.sql.Date(date.getTime());
                     operaciones op = new operaciones();
                     op.setFecha(d);
                     op.setIdLocal(Integer.parseInt(idLocal));
                     op.setFlujo(flujo);
-                    op.setTransaccion("compra");
-                    op.setMonto(BigDecimal.valueOf(jose));
+                    op.setTransaccion("Compra");
+                    op.setMonto(BigDecimal.valueOf(Double.parseDouble(monto)));
 
                     op = Operaciones.insertar(op);
                     for (int i = 0; i < idProducto.length; i++) {
@@ -126,6 +128,8 @@ public class SCompras extends HttpServlet {
                     }
 
                     Operaciones.commit();
+                    
+                    request.getSession().setAttribute("resultado", 1);
 
                 } catch (Exception ex) {
                     try {
@@ -159,16 +163,11 @@ public class SCompras extends HttpServlet {
             Operaciones.iniciarTransaccion();
             String sql = "";
 
-            sql = "select dt.idProducto,p.nombre, SUM(CASE WHEN o.transaccion = 'compra'  THEN dt.cantidad ELSE -dt.cantidad\n"
-                    + " END) as existencia from Operaciones o, Productos p, Operaciones_Detalles dt\n"
-                    + " where dt.idProducto=p.idProducto and o.idOperacion=dt.idOperacion and o.idLocal=? group by dt.idProducto, p.idProducto,p.nombre";
+            sql = "SELECT idProducto, nombre FROM Productos";
             String[][] productos = null;
-            List<Object> params = new ArrayList<>();
-            String user = (String) request.getSession().getAttribute("Usuario");
-            params.add(getLocal(user));
-            productos = Operaciones.consultar(sql, params);
+            productos = Operaciones.consultar(sql, null);
             //declaracion de cabeceras a usar en la tabla HTML
-            String[] cabeceras = new String[]{"ID Producto", "Nombre","Existencia"};//variable de tipo Tabla para generar la Tabla HTML
+            String[] cabeceras = new String[]{"ID Producto", "Nombre"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(productos, //array quecontiene los datos
                     "100%", //ancho de la tabla px | % 
                     Tabla.STYLE.TABLE01, //estilo de la tabla
