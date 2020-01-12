@@ -56,11 +56,9 @@ public class SMembresias extends HttpServlet {
         }*/
         cargarTablaPacientes(request, response);
         cargarTablaBeneficiarios(request, response);
+        cargarTablaMembresiasYBeneficiarios(request, response);
+        cargarTablaSoloBeneficiarios(request,response);
         if (accion == null) {
-            if (request.getSession().getAttribute("resultado") != null) {
-                request.setAttribute("resultado", request.getSession().getAttribute("resultado"));
-                request.getSession().removeAttribute("resultado");
-            }
             request.getRequestDispatcher("membresia.jsp").forward(request, response);
         } 
             else if (accion.equals("mostrar")) {
@@ -80,8 +78,8 @@ public class SMembresias extends HttpServlet {
                 String fechaRegistro = request.getParameter("txtfechaRegistro");
                 String fechaVencimiento = request.getParameter("txtfechaVencimiento");
                 String monto = request.getParameter("txtMonto");
+                String porcentaje = request.getParameter("txtPorcentaje");
 
-                String por = request.getParameter("txtPor");
                 String[] idMembresia = request.getParameterValues("id");
                 // String[] Producto = request.getParameterValues("producto");
                
@@ -112,7 +110,9 @@ public class SMembresias extends HttpServlet {
                     m.setExpediente(Integer.parseInt(expediente));
                     
                     m.setMonto(BigDecimal.valueOf(Double.parseDouble(monto)));
-                    m.setPorcentaje(BigDecimal.valueOf(Double.parseDouble(por)));
+                    
+                    m.setPorcentaje(BigDecimal.valueOf(Double.parseDouble(porcentaje)));
+                    
                     m = Operaciones.insertar(m);
                     for (int i = 0; i < idMembresia.length; i++) {
                         Membresias_Beneficiarios mb = new Membresias_Beneficiarios();
@@ -176,7 +176,7 @@ public class SMembresias extends HttpServlet {
             //array con las cabeceras de la tabla
             //boton eliminar
 
-            tab.setMetodoFilaSeleccionable("_SeleccionarP_");
+            tab.setMetodoFilaSeleccionable("_Seleccionarp_");
             tab.setPageContext(request.getContextPath());
             tab.setFilaSeleccionable(true);//icono para modificar y eliminar// 
             tab.setIconoModificable("/iconos/edit.png");// 
@@ -228,7 +228,7 @@ public class SMembresias extends HttpServlet {
             //array con las cabeceras de la tabla
             //boton eliminar
 
-            tab.setMetodoFilaSeleccionable("_SeleccionarB_");
+            tab.setMetodoFilaSeleccionable("_Seleccionarb_");
             tab.setPageContext(request.getContextPath());
             tab.setFilaSeleccionable(true);//icono para modificar y eliminar// 
             tab.setIconoModificable("/iconos/edit.png");// 
@@ -253,32 +253,19 @@ public class SMembresias extends HttpServlet {
             }
         }
     }
-
-    private List<Locales> getLocales() throws SQLException {
-        List<Locales> locales = new ArrayList();
-        try {
-            String sql = "SELECT * FROM Locales ";
-
-            String[][] rs = Operaciones.consultar(sql, null);
-            for (int i = 0; i < rs[0].length; i++) {
-                Locales l = new Locales(Integer.parseInt(rs[0][i]), rs[1][i]);
-                locales.add(l);
-            }
-        } catch (Exception ex) {
-            Operaciones.rollback();
-        }
-        return locales;
-    }
-
-    private void cargarTablacompras(HttpServletRequest request, HttpServletResponse response) {
+     private void cargarTablaMembresiasYBeneficiarios(HttpServletRequest request, HttpServletResponse response) {
         try {
             Conexion conn = new ConexionPool();
             conn.conectar();
             Operaciones.abrirConexion(conn);
             Operaciones.iniciarTransaccion();
             String sql = "";
-
-            sql = "SELECT o.idProducto,p.nombre,od.costoCompra,od.PrecioVenta,od.cantidad,l.local,o.fecha  FROM Operaciones o, Operaciones_Detalles pd,Locales l,Productos p WHERE o.idOperacion = pd.idOperacion AND o.idProducto=p.idProducto AND o.idLocal =l.idLocal";
+            if(request.getParameter("txtBusqueda")!=null){
+                sql = "select m.idMembresia, m.fechaRegistro, m.fechaVencimiento, m.monto, mb.expediente from  Membresias m, Membresias_Beneficiarios mb where m.idMembresia=mb.idMembresia and m.idMembresia=?;";
+            }
+            else{
+            sql = "select m.idMembresia, m.fechaRegistro, m.fechaVencimiento, m.monto, porcentaje, (select p.nombres from Pacientes p where p.expediente=m.expediente) from  Membresias m, Membresias_Beneficiarios mb where m.expediente=mb.expediente;";
+            }
             String[][] compras = null;
             if (request.getParameter("txtBusqueda") != null) {
                 List<Object> params = new ArrayList<>();
@@ -288,7 +275,7 @@ public class SMembresias extends HttpServlet {
                 compras = Operaciones.consultar(sql, null);
             }
             //declaracion de cabeceras a usar en la tabla HTML
-            String[] cabeceras = new String[]{"idProducto", "", "Producto", "Costo", "PrecioVenta", "Cantidad", "Clinica", "Fecha"};//variable de tipo Tabla para generar la Tabla HTML
+            String[] cabeceras = new String[]{"ID MEMBRESIA", "FECHA REGISTRO", "FECHA VENCIMIENTO", "MONTO", "PORCENTAJE", "BENEFICIARIO"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(compras, //array quecontiene los datos
                     "100%", //ancho de la tabla px | % 
                     Tabla.STYLE.TABLE01, //estilo de la tabla
@@ -296,31 +283,86 @@ public class SMembresias extends HttpServlet {
                     cabeceras);
             //array con las cabeceras de la tabla
             //boton eliminar
-            tab.setEliminable(true);//boton actualizar
+            /*tab.setEliminable(true);//boton actualizar
             tab.setModificable(true); //url del proyecto
             tab.setPageContext(request.getContextPath());//pagina encargada de eliminar
-            tab.setPaginaEliminable("/SCompras?accion=eliminar");//pagina encargada de actualizacion
-            tab.setPaginaModificable("/SCompras?accion=modificar");//pagina encargada de seleccion para operaciones
-            tab.setPaginaSeleccionable("/SCompras?accion=modificar");//icono para modificar y eliminar
+            tab.setPaginaEliminable("/SMembresias?accion=eliminar");//pagina encargada de actualizacion
+            tab.setPaginaModificable("/SMembresias?accion=modificar");//pagina encargada de seleccion para operaciones
+            tab.setPaginaSeleccionable("/SMembresias?accion=modificar");//icono para modificar y eliminar
             tab.setIconoModificable("/iconos/edit.png");
-            tab.setIconoEliminable("/iconos/delete.png"); //columnas seleccionables
-            tab.setPie("Resultado de pacientes");
+            tab.setIconoEliminable("/iconos/delete.png"); //columnas seleccionables*/
+            tab.setColumnasSeleccionables(new int[]{5});
+            tab.setPie("Resultado de expedientes");
 
             //imprime la tabla en pantalla
             String tabla01 = tab.getTabla();
-            request.setAttribute("tablaCompras", tabla01);
+            request.setAttribute("tablaMembresiaYBeneficiario", tabla01);
             request.setAttribute("valor", request.getParameter("txtBusqueda"));
         } catch (Exception ex) {
             try {
                 Operaciones.rollback();
             } catch (SQLException ex1) {
-                Logger.getLogger(SCompras.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(SMembresias.class.getName()).log(Level.SEVERE, null, ex1);
             }
         } finally {
             try {
                 Operaciones.cerrarConexion();
             } catch (SQLException ex) {
-                Logger.getLogger(SCompras.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SMembresias.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
+    }
+     private void cargarTablaSoloBeneficiarios(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Conexion conn = new ConexionPool();
+            conn.conectar();
+            Operaciones.abrirConexion(conn);
+            Operaciones.iniciarTransaccion();
+            String sql = "";
+
+            sql = "select expediente, nombres from Pacientes";
+            String[][] pacientes = null;
+            if (request.getParameter("txtBusqueda") != null) {
+                List<Object> params = new ArrayList<>();
+                params.add("%" + request.getParameter("txtBusqueda").toString() + "%");
+                pacientes = Operaciones.consultar(sql, params);
+            } else {
+                pacientes = Operaciones.consultar(sql, null);
+            }
+            //declaracion de cabeceras a usar en la tabla HTML
+            String[] cabeceras = new String[]{"Expediente", "Nombres"};//variable de tipo Tabla para generar la Tabla HTML
+            Tabla tab = new Tabla(pacientes, //array quecontiene los datos
+                    "100%", //ancho de la tabla px | % 
+                    Tabla.STYLE.TABLE01, //estilo de la tabla
+                    Tabla.ALIGN.LEFT, // alineacion de la tabla
+                    cabeceras);
+            //array con las cabeceras de la tabla
+            //boton eliminar
+
+            tab.setMetodoFilaSeleccionable("_SeleccionarSoloB_");
+            tab.setPageContext(request.getContextPath());
+            tab.setFilaSeleccionable(true);//icono para modificar y eliminar// 
+            tab.setIconoModificable("/iconos/edit.png");// 
+            tab.setIconoEliminable("/iconos/delete.png");//columnas seleccionables
+            tab.setPie("Resultado de pacientes");
+
+            //imprime la tabla en pantalla
+            String tabla01 = tab.getTabla();
+            request.setAttribute("tablasolobene", tabla01);
+            request.setAttribute("valor", request.getParameter("txtBusqueda"));
+        } catch (Exception ex) {
+            try {
+                Operaciones.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                Operaciones.cerrarConexion();
+            } catch (SQLException ex) {
+                Logger.getLogger(Pacientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

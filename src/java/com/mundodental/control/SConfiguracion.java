@@ -384,7 +384,6 @@ public class SConfiguracion extends HttpServlet {
             case "insertar_permiso": {
 
                 String idRol = request.getParameter("txtIdRol");
-                String rol = request.getParameter("txtRol");
                 try {
                     Conexion conn = new ConexionPool();
                     conn.conectar();

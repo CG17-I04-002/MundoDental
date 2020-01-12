@@ -46,6 +46,10 @@ public class SConsultas extends HttpServlet {
             request.setAttribute("PermisosAsignados", PermisosAsignados);
         }
         if (accion == null) {
+            if (request.getSession().getAttribute("resultado") != null) {
+                request.setAttribute("resultado", request.getSession().getAttribute("resultado"));
+                request.getSession().removeAttribute("resultado");
+            }
             int id =(int) request.getSession().getAttribute("idRol");
             if(id == 3){
                 cargarTablaTra(request, response);
@@ -194,6 +198,9 @@ public class SConsultas extends HttpServlet {
 
                     c.setEstado("Proceso");
                     c = Operaciones.actualizar(c.getIdConsulta(), c);
+                }else{
+                    
+                    request.getSession().setAttribute("resultado", 0);
                 }
                 
                 Operaciones.commit();
@@ -236,6 +243,33 @@ public class SConsultas extends HttpServlet {
                 }
             }
             response.sendRedirect(request.getContextPath() + "/SConsultas");
+        }else if (accion.equals("eliminar")) {
+            try {
+                Conexion conn = new ConexionPool();
+                conn.conectar();
+                Operaciones.abrirConexion(conn);
+                Operaciones.iniciarTransaccion();
+                Consultas c = Operaciones.eliminar(Integer.parseInt(request.getParameter("id")), new Consultas());
+                
+                Operaciones.commit();
+                
+                request.getSession().setAttribute("resultado", 1);
+            }catch(Exception ex) {
+                try {
+                    Operaciones.rollback();
+                    
+                request.getSession().setAttribute("resultado", 0);
+                } catch (SQLException ex1) {
+                    Logger.getLogger(SConsultas.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }finally {
+                try {
+                    Operaciones.cerrarConexion();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SConsultas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            response.sendRedirect(request.getContextPath() + "/SConsultas?accion=mostrar");
         }
 
     }
@@ -274,6 +308,7 @@ public class SConsultas extends HttpServlet {
                     consultas.setEstado("Espera");
                     consultas = Operaciones.insertar(consultas);
                     Operaciones.commit();
+                    request.getSession().setAttribute("resultado", 1);
                 } catch (Exception ex) {
                     try {
                         Operaciones.rollback();
@@ -306,7 +341,13 @@ public class SConsultas extends HttpServlet {
                     Consultas consultas = new Consultas();
                     consultas = Operaciones.get(Integer.parseInt(id), new Consultas());
                     consultas.setCosto(BigDecimal.valueOf(Double.parseDouble(total)));
-                    consultas.setTotal(BigDecimal.valueOf(Double.parseDouble(total)));
+                    double des = getDescuento(consultas.getExpediente()).doubleValue()/100;
+                    des*=Double.parseDouble(total);
+                    
+                    double tot = (Double.parseDouble(total)-des);
+                    consultas.setDescuento(BigDecimal.valueOf(des));
+                    
+                    consultas.setTotal(BigDecimal.valueOf(tot));
                     consultas.setEstado("Completada");
                     for(int i =0; i<idTra.length; i++){
                         Consultas_Tratamientos ct = new Consultas_Tratamientos();
@@ -476,7 +517,7 @@ public class SConsultas extends HttpServlet {
     private List<Empleados> getDoctores() throws SQLException {
         List<Empleados> doctores = new ArrayList();
         try {
-            String sql = "SELECT e.idEmpleado, e.nombres, e.apellidos FROM Empleados e, Usuario u WHERE u.usuario = e.usuario AND u.idRol = 3";
+            String sql = "SELECT e.idEmpleado, e.nombres, e.apellidos FROM Empleados e, Usuario u WHERE e.estado = 'Activo' AND u.usuario = e.usuario AND u.idRol = 3";
             
             String[][] rs = Operaciones.consultar(sql, null);
             for (int i = 0; i < rs[0].length; i++) {
@@ -520,10 +561,38 @@ public class SConsultas extends HttpServlet {
         return encontrado;
     }
     
+    private BigDecimal getDescuento(int id) throws SQLException {
+        BigDecimal des = BigDecimal.ZERO;
+        try {
+            String sql = "SELECT porcentaje   FROM Membresias  WHERE expediente = ?";
+            
+            List<Object> params = new ArrayList<>();
+            params.add(id);
+            
+            String[][] rs = Operaciones.consultar(sql, params);
+            if( rs!=null){
+                des = BigDecimal.valueOf(Double.parseDouble(rs[0][0]));
+            }else{
+                String sql2 = "SELECT MAX(m.porcentaje)  FROM Membresias m,Membresias_Beneficiarios mb  WHERE mb.expediente = ? AND m.idMembresia = mb.idMembresia";
+            
+                List<Object> params2 = new ArrayList<>();
+                params2.add(id);
+                 rs = Operaciones.consultar(sql2, params2);
+                 if(rs!=null){
+                     
+                    des = BigDecimal.valueOf(Double.parseDouble(rs[0][0]));
+                 }
+            }
+        } catch (Exception ex) {
+            Operaciones.rollback();
+        }
+        return des;
+    }
+    
     private List<Consultas> getConsultas() throws SQLException {
         List<Consultas> consultas = new ArrayList();
         try {
-            String sql = "SELECT * FROM Consultas WHERE NOT estado = 'Finalizada' AND NOT estado ='Cancelada'";
+            String sql = "SELECT * FROM Consultas WHERE NOT estado = 'Finalizada' AND NOT estado ='Cancelada' ORDER BY horaIngreso";
             
             String[][] rs = Operaciones.consultar(sql, null);
             for (int i = 0; i < rs[0].length; i++) {
@@ -596,14 +665,10 @@ public class SConsultas extends HttpServlet {
             //array con las cabeceras de la tabla
             //boton eliminar
             tab.setEliminable(true);//boton actualizar
-            tab.setModificable(true); //url del proyecto
             tab.setPageContext(request.getContextPath());//pagina encargada de eliminar
-            tab.setPaginaEliminable("/SCitas?accion=eliminar");//pagina encargada de actualizacion
-            tab.setPaginaModificable("/SCitas?accion=modificar");//pagina encargada de seleccion para operaciones
-            tab.setPaginaSeleccionable("/SCitas?accion=modificar");//icono para modificar y eliminar
-            tab.setIconoModificable("/iconos/edit.png");
+            tab.setPaginaEliminable("/SConsultas?accion=eliminar");//pagina encargada de actualizacion
             tab.setIconoEliminable("/iconos/delete.png"); //columnas seleccionables
-            tab.setPie("Resultado de pacientes");
+            tab.setPie("Resultado de consultas");
             
             
             //imprime la tabla en pantalla

@@ -57,6 +57,15 @@
                         
                         <h5>Agregar Consultas</h5>
                         <hr>
+                        <c:if test="${resultado!=null}">
+                            <c:if test="${resultado==1}">
+                                <p style="color:darkgreen"><strong>Operación realizada correctamente.</strong></p>
+                            </c:if>
+                            <c:if test="${resultado==0}">
+                                <p style="color:darkred"><strong>La operación no se realizó.</strong></p>
+                            </c:if>
+
+                        </c:if>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#modalPac" data-whatever="@mdo"><i class="fas fa-check-circle"></i> Seleccionar Paciente</button><br>
                         <br>
                         <form action="${pageContext.servletContext.contextPath}/SConsultas?accion=insertar_modificar" method="POST">
@@ -234,7 +243,7 @@
                                                     <div class="col-md-4  d-flex  justify-content-end">
                                                         
                                                         <input type="button" class="boton" value="Cancelar" onclick="cancelar('${con.idConsulta}');">
-                                                        <input type="button" class="boton" value="Finalizar" onclick="enviar('${con.idConsulta}');">
+                                                        <input type="button"  <c:if test="${con.estado != 'Completada'}">class='disabled'</c:if>  value="Finalizar" onclick="enviar('${con.idConsulta}');">
                                                     </div>
                                                 </div>
                                             </div>

@@ -1,0 +1,50 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+#table01 td{ padding-top: 8px; cursor: pointer}
+.pv{
+    width: 120px;
+}
+.columna2{
+    padding: 15px 25px;
+}
+.id{
+    width: 50px;
+}
+.prod,.producto{
+    width: 175px;
+    height: 50px;
+}
+.cost, .costo{
+    width: 75px;
+    height: 50px;
+}
+.pv, .pventa{
+    width:  140px;
+    height: 50px;
+}
+.cant, .elim, .cantidad{
+    width: 90px;
+    height: 50px;
+}
+.vft,#vf{
+    height: 50px;
+    width: 70px;
+}
+.td5{
+    text-align: center;
+}
+th , .td1,td2,td3,td4,td5,td6 {
+    height: 50px;
+    background-color: darkslategrey;
+}
+th{
+    color: white;
+    text-align: center;
+}
+.vf{height: 50px;}
+.idp{
+    height: 50px;
+    width: 50px;
+}

@@ -83,16 +83,16 @@
 
                                         <div class="form-row">
 
-                                                <c:forEach  var="m" items="${menu}">
-                                                    
-                                                    <div class="form-group col-md-4">
-                                                        <label><input type="checkbox" 
-                                                               <c:forEach  var="per" items="${permiso}">       
+                                            <c:forEach  var="m" items="${menu}">
+
+                                                <div class="form-group col-md-4">
+                                                    <label><input type="checkbox" 
+                                                                  <c:forEach  var="per" items="${permiso}">       
                                                                       <c:if test="${m.idmenu==per.idmenu}">checked</c:if>
-                                                                
-                                                                </c:forEach>    
-                                                                id="cb${m.idmenu}" name="cb${m.idmenu}" value="${m.idmenu}"> ${m.menu}</label> 
-                                                    </div>
+
+                                                                  </c:forEach>    
+                                                                  id="cb${m.idmenu}" name="cb${m.idmenu}" value="${m.idmenu}"> ${m.menu}</label> 
+                                                </div>
                                             </c:forEach> 
                                         </div>
                                     </div>

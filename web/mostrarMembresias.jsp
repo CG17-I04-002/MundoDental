@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,6 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Membresias</title>
         <link rel="shortcut icon" href="img/Solo logo.ico">
+
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
 
         <script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
@@ -33,376 +35,41 @@
         <script src="js/default.js" type="text/javascript"></script>
 
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <link href="css/tabla.css" rel="stylesheet" type="text/css"/>
 
     </head>
     <body>
 
         <%@include file="menu.jsp" %>
+        
         <div class="main-content">
             <div class="title d-flex  justify-content-between align-items-center">
                 <h5>
                     MEMBRESIAS REGISTRADAS
                 </h5>
-               
-                <a class="btn btn-primary" href="Membresias"> Regresar</a>
+                
+                <a href="SMembresias" class="btn btn-primary" href="Compras"> Regresar</a>
             </div>
             <div class="main">
-                <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle" ></i> Nueva Membresia</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="txtNombreBeneficiario3">Nombre del Beneficiario</label>
-                                        <input type="text" class="form-control" id="txtDir" >
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="txtNombreBeneficiario3">Nombre del Beneficiario</label>
-                                        <input type="text" id="txtFecha" class="form-control"><br>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="txtNombreBeneficiario3">Nombre del Beneficiario</label>
-                                        <input type="text" class="form-control" id="txtEmail" >
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Agregar</button>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-ban"></i> Cancelar</button>
-
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Actualizar</button>
-
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div class="tbPac">
-
-                    <table id="tb1" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
-                                <th>Telefono</th>
-                                <th>DUI</th>
-                                <th>Beneficiario</th>
-                                <th>Beneficiario</th>
-                                <th>Beneficiario</th>
-                                <th>Opcion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        <tr>
-                                <td>1</td>
-                                <td>Juan Perez</td>
-                                <td>21254495</td>
-                                <td>70656565-1</td>
-                                <td>Jose Arevalo</td>
-                                <td>Juan Perez</td>
-                                <td>Juan Arevalo</td>
-                                <td><center><button class="btn btn-primary"><i class="fas fa-pencil-alt"></i></button></center></td>
-                        </tr>
-                        </tfoot>
-                    </table>
+                    <div class="busqueda" style="width: 50%; text-align: right">
+                        <form action="${pageContext.servletContext.contextPath}/SMembresias?accion=mostrar" method="get">
+                            <input type="text" name="txtBusqueda" id="txtBusqueda" value="${valor}" />
+                            <input type="submit" value="Buscar"/>
+                            <div class="form-group col-md-2">
+                                   
+                                </div>
+                        </form>
+                            
+                    </div>                    
+                    ${tablaMembresiaYBeneficiario}
+                    <script>
+                        window.onload = function () {
+                            document.getElementById("txtBusqueda").focus();
+                        };
+                    </script> 
                 </div>
             </div>
 

@@ -53,7 +53,7 @@
                 <h5>
                     DATOS DE ROLES
                 </h5>
-                <button  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Nuevo Paciente</button>
+                <button  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus-circle" ></i> Nuevo Rol</button>
             </div>
 
             <div class="main">
@@ -77,7 +77,7 @@
 
             </div>
             <div class="main">
-                <form action="${pageContext.servletContext.contextPath}/SConfiguracion?accion=insertar_modificar" method="POST">
+                <form action="${pageContext.servletContext.contextPath}/SConfiguracion?accion=insertar_modificar_rol" method="POST">
                     <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">

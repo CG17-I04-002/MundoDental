@@ -260,7 +260,6 @@
                                                             <td><input type='text'value='" + cantidad + "' id='c"+id+"'  name='cantidad' class='form-control'></td> \
                                                             <td><input type='button' onclick='restarV("+id+");' class='del btn btn-danger' value='Eliminar'></td> \
                                                     </tr>"
-
                                                                             ;
                                                                     $("#tabla tbody").append(nuevaFila);
                                                                     
@@ -273,12 +272,10 @@
        
                                            
                                         });
-
                                         // evento para eliminar la fila
                                         $("#tabla").on("click", ".del", function () {
                                             $(this).parents("tr").remove();
                                         });
-
                                     });
                                 </script>
                                 <strong>Total: $</strong><input type="text" class="form-control" name="txtTotal" id="txtTotal" readonly="readonly" size="25" required value="0"/>

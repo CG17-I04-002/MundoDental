@@ -176,14 +176,14 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="txtFecha">Fecha de inicio</label>
-                                            <input type="date" name="txtFeIni" id="txtFeIni" class="form-control">
+                                            <input type="date" name="txtFeIni" id="txtFeIni" class="form-control" required>
                                         </div>
                                     </div>
 
 
                                     <div class="form-group col-md-6">
                                         <label for="txtFecha">Fecha de final</label>
-                                        <input type="date" name="txtFeFin" id="txtFeFin" class="form-control">
+                                        <input type="date" name="txtFeFin" id="txtFeFin" class="form-control"  required>
                                     </div>
                                 </div>    
 
@@ -222,14 +222,14 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="txtFecha">Fecha de inicio</label>
-                                            <input type="date" name="txtFeIni" id="txtFeIni" class="form-control">
+                                            <input type="date" name="txtFeIni" id="txtFeIni" class="form-control"  required>
                                         </div>
                                     </div>
 
 
                                     <div class="form-group col-md-6">
                                         <label for="txtFecha">Fecha de final</label>
-                                        <input type="date" name="txtFeFin" id="txtFeFin" class="form-control">
+                                        <input type="date" name="txtFeFin" id="txtFeFin" class="form-control"  required>
                                     </div>
                                 </div>    
 
@@ -268,14 +268,14 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="txtFecha">Fecha de inicio</label>
-                                            <input type="date" name="txtFeIni" id="txtFeIni" class="form-control">
+                                            <input type="date" name="txtFeIni" id="txtFeIni" class="form-control"  required>
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="txtFecha">Fecha de final</label>
-                                            <input type="date" name="txtFeFin" id="txtFeFin" class="form-control">
+                                            <input type="date" name="txtFeFin" id="txtFeFin" class="form-control"  required>
                                         </div>
 
                                         <div class="form-group col-md-6">
@@ -326,14 +326,14 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="txtFecha">Fecha de inicio</label>
-                                            <input type="date" name="txtFeIni" id="txtFeIni" class="form-control">
+                                            <input type="date" name="txtFeIni" id="txtFeIni" class="form-control"  required>
                                         </div>
                                     </div>
 
 
                                     <div class="form-group col-md-6">
                                         <label for="txtFecha">Fecha de final</label>
-                                        <input type="date" name="txtFeFin" id="txtFeFin" class="form-control">
+                                        <input type="date" name="txtFeFin" id="txtFeFin" class="form-control"  required>
                                     </div>
                                 </div>    
 

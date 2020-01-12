@@ -106,7 +106,15 @@
 
                 <div class="tbPac">
 
-                          
+                     <c:if test="${resultado!=null}">
+                            <c:if test="${resultado==1}">
+                                <p style="color:darkgreen"><strong>Operación realizada correctamente.</strong></p>
+                            </c:if>
+                            <c:if test="${resultado==0}">
+                                <p style="color:darkred"><strong>La operación no se realizó.</strong></p>
+                            </c:if>
+
+                        </c:if>     
                     ${tabla}
                 </div>
             </div>

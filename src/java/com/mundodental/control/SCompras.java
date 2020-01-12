@@ -66,10 +66,6 @@ public class SCompras extends HttpServlet {
         cargarTabla(request, response);
         cargarTablacompras(request, response);
         if (accion == null) {
-            if (request.getSession().getAttribute("resultado") != null) {
-                request.setAttribute("resultado", request.getSession().getAttribute("resultado"));
-                request.getSession().removeAttribute("resultado");
-            }
             request.getRequestDispatcher("realizarCompra.jsp").forward(request, response);
         } else if (accion.equals("mostrar")) {
             cargarTablacompras(request, response);
@@ -87,8 +83,8 @@ public class SCompras extends HttpServlet {
                 String idLocal = request.getParameter("cblocal");
                 String fecha = request.getParameter("txtfecha");
                 String flujo = request.getParameter("txtflujo");
-                String monto = request.getParameter("txtTotal");
-                
+                String monto = request.getParameter("txtmonto");
+                double jose = 0;
 
                 String[] idProducto = request.getParameterValues("id");
                 // String[] Producto = request.getParameterValues("producto");
@@ -106,14 +102,16 @@ public class SCompras extends HttpServlet {
                     Date date = sdf.parse(fecha);
                     Operaciones_Detalles o = new Operaciones_Detalles();
 
-                    
+                    for (int i = 0; i < idProducto.length; i++) {
+                        jose += Double.parseDouble(costo[i]);
+                    }
                     java.sql.Date d = new java.sql.Date(date.getTime());
                     operaciones op = new operaciones();
                     op.setFecha(d);
                     op.setIdLocal(Integer.parseInt(idLocal));
                     op.setFlujo(flujo);
-                    op.setTransaccion("Compra");
-                    op.setMonto(BigDecimal.valueOf(Double.parseDouble(monto)));
+                    op.setTransaccion("compra");
+                    op.setMonto(BigDecimal.valueOf(jose));
 
                     op = Operaciones.insertar(op);
                     for (int i = 0; i < idProducto.length; i++) {
@@ -128,8 +126,6 @@ public class SCompras extends HttpServlet {
                     }
 
                     Operaciones.commit();
-                    
-                    request.getSession().setAttribute("resultado", 1);
 
                 } catch (Exception ex) {
                     try {
@@ -163,9 +159,15 @@ public class SCompras extends HttpServlet {
             Operaciones.iniciarTransaccion();
             String sql = "";
 
-            sql = "SELECT idProducto, nombre FROM Productos";
+            sql = "select idProducto, nombre from productos";
             String[][] productos = null;
-            productos = Operaciones.consultar(sql, null);
+            if (request.getParameter("txtBusqueda") != null) {
+                List<Object> params = new ArrayList<>();
+                params.add("%" + request.getParameter("txtBusqueda").toString() + "%");
+                productos = Operaciones.consultar(sql, params);
+            } else {
+                productos = Operaciones.consultar(sql, null);
+            }
             //declaracion de cabeceras a usar en la tabla HTML
             String[] cabeceras = new String[]{"ID Producto", "Nombre"};//variable de tipo Tabla para generar la Tabla HTML
             Tabla tab = new Tabla(productos, //array quecontiene los datos
@@ -225,8 +227,11 @@ public class SCompras extends HttpServlet {
             Operaciones.abrirConexion(conn);
             Operaciones.iniciarTransaccion();
             String sql = "";
-
-            sql = "select dt.idOperacion,dt.idProducto,p.nombre,o.transaccion ,o.flujo,dt.costoCompra,dt.precioVenta,dt.cantidad,o.fecha,l.local from Operaciones o, Operaciones_Detalles dt,Productos p, Locales l where o.idOperacion=dt.idOperacion and dt.idProducto=p.idProducto and o.idLocal=l.idLocal and o.transaccion='compra';";
+            if (request.getParameter("txtBusqueda") != null) {
+                sql = "select dt.idOperacion,dt.idProducto,p.nombre,o.transaccion ,o.flujo,dt.costoCompra,dt.precioVenta,dt.cantidad,o.fecha,l.local from Operaciones o, Operaciones_Detalles dt,Productos p, Locales l where (p.nombre LIKE? and o.fecha LIKE?) o.idOperacion=dt.idOperacion and dt.idProducto=p.idProducto and o.idLocal=l.idLocal and o.transaccion='compra'";
+            } else {
+                sql = "select dt.idOperacion,dt.idProducto,p.nombre,o.transaccion ,o.flujo,dt.costoCompra,dt.precioVenta,dt.cantidad,o.fecha,l.local from Operaciones o, Operaciones_Detalles dt,Productos p, Locales l where o.idOperacion=dt.idOperacion and dt.idProducto=p.idProducto and o.idLocal=l.idLocal and o.transaccion='compra'";
+            }
             String[][] compras = null;
             if (request.getParameter("txtBusqueda") != null) {
                 List<Object> params = new ArrayList<>();
@@ -250,8 +255,8 @@ public class SCompras extends HttpServlet {
             tab.setPaginaEliminable("/SCompras?accion=eliminar");//pagina encargada de actualizacion
             tab.setPaginaModificable("/SCompras?accion=modificar");//pagina encargada de seleccion para operaciones
             tab.setPaginaSeleccionable("/SCompras?accion=modificar");//icono para modificar y eliminar
-            tab.setIconoModificable("/iconos/edit.png");
-            tab.setIconoEliminable("/iconos/delete.png"); //columnas seleccionables
+            tab.setIconoModificable("/iconos/17_104874.png");
+            tab.setIconoEliminable("/iconos/borrar.png"); //columnas seleccionables
             tab.setPie("Resultado de pacientes");
 
             //imprime la tabla en pantalla
@@ -273,17 +278,4 @@ public class SCompras extends HttpServlet {
         }
     }
 
-    private int getLocal(String nombre) throws SQLException {
-        int l = 0;
-        try {
-            String sql = "select idLocal from empleados where usuario=?";
-            List<Object> param = new ArrayList();
-            param.add(nombre);
-            String[][] rs = Operaciones.consultar(sql, param);
-            l = Integer.parseInt(rs[0][0]);
-        } catch (Exception e) {
-            Operaciones.rollback();
-        }
-        return l;
-    }
 }
